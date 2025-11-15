@@ -560,12 +560,73 @@ textarea {
     padding: 20px;
     font-style: italic;
 }
+
+/* Email Button */
+.btn-email {
+    background: #28a745;
     color: white;
     margin-left: 10px;
 }
 
 .btn-email:hover {
     background: #218838;
+}
+
+/* OTDR Files Preview */
+.files-preview-container {
+    margin-top: 10px;
+}
+
+.file-preview-item {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    margin-bottom: 6px;
+    background: #f8f9fa;
+    border-radius: 4px;
+    border: 1px solid #e9ecef;
+}
+
+.file-preview-item .file-icon {
+    font-size: 1.2em;
+    margin-right: 10px;
+}
+
+.file-preview-item .file-name {
+    flex: 1;
+    font-size: 0.9em;
+    color: #495057;
+}
+
+.file-preview-item .file-size {
+    font-size: 0.85em;
+    color: #6c757d;
+    margin-right: 10px;
+}
+
+.file-preview-item button {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 4px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85em;
+}
+
+.file-preview-item button:hover {
+    background: #c82333;
+}
+
+/* PDF Export Button */
+.btn-pdf {
+    background: #e63946;
+    color: white;
+    margin-left: 10px;
+}
+
+.btn-pdf:hover {
+    background: #d62828;
 }
 
 /* Responsive Design */

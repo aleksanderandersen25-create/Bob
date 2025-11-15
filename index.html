@@ -119,6 +119,14 @@
                             </select>
                         </div>
                         <div class="form-group">
+                            <label for="otdrFiles">OTDR Measurement Files</label>
+                            <input type="file" id="otdrFiles" accept=".sor,.pdf,.zip" multiple>
+                            <small>Upload OTDR measurement files (SOR, PDF, ZIP)</small>
+                        </div>
+                        <div id="otdrFilesPreview" class="files-preview-container">
+                            <!-- OTDR file previews will appear here -->
+                        </div>
+                        <div class="form-group">
                             <label for="insertionLoss">Insertion Loss (dB)</label>
                             <input type="number" id="insertionLoss" step="0.01" min="0">
                         </div>

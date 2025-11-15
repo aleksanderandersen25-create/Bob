@@ -6,6 +6,8 @@ const CHECKLIST_TEMPLATES_KEY = 'photoChecklistTemplates';
 let currentPhotos = [];
 // Global array for photo checklist items
 let photoChecklist = [];
+// Global array for OTDR files
+let currentOtdrFiles = [];
 
 // Initialize application
 document.addEventListener('DOMContentLoaded', function() {
@@ -16,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
     setupReportFilters();
     setupPhotoUpload();
     setupPhotoChecklist();
+    setupOtdrFileUpload();
     renderReports();
 });
 
@@ -75,13 +78,16 @@ function setupFormSubmit() {
             issues: document.getElementById('issues').value,
             photos: currentPhotos, // Add photos to installation data
             photoChecklist: photoChecklist, // Add checklist to installation data
+            otdrFiles: currentOtdrFiles, // Add OTDR files
             createdAt: new Date().toISOString()
         };
         
         saveInstallation(installation);
         form.reset();
         currentPhotos = []; // Clear photos array
+        currentOtdrFiles = []; // Clear OTDR files
         document.getElementById('photoPreviewContainer').innerHTML = ''; // Clear preview
+        document.getElementById('otdrFilesPreview').innerHTML = ''; // Clear OTDR preview
         // Note: Keep checklist for reuse in next installation
         
         // Show success message
@@ -341,6 +347,21 @@ function renderReports(statusFilter = 'all') {
                     </div>
                 </div>
             ` : ''}
+            ${inst.otdrFiles && inst.otdrFiles.length > 0 ? `
+                <div class="report-detail-item" style="margin-top: 15px;">
+                    <label>OTDR Measurement Files (${inst.otdrFiles.length})</label>
+                    <div class="files-preview-container">
+                        ${inst.otdrFiles.map(file => `
+                            <div class="file-preview-item">
+                                <span class="file-icon">${getFileIcon(file.name)}</span>
+                                <span class="file-name">${file.name}</span>
+                                <span class="file-size">${formatFileSize(file.size)}</span>
+                                <button onclick="downloadOtdrFile('${file.data}', '${file.name}')">Download</button>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            ` : ''}
             ${inst.photos && inst.photos.length > 0 ? `
                 <div class="report-detail-item" style="margin-top: 15px;">
                     <label>Installation Photos (${inst.photos.length})</label>
@@ -356,6 +377,7 @@ function renderReports(statusFilter = 'all') {
                 </div>
             ` : ''}
             <div style="margin-top: 15px; text-align: center;">
+                <button onclick="exportReportAsPDF(${inst.id})" class="btn btn-primary btn-pdf">Export as PDF</button>
                 <button onclick="sendReportByEmail(${inst.id})" class="btn btn-primary btn-email">Send via Email</button>
             </div>
         </div>
@@ -701,4 +723,360 @@ function saveChecklistAsTemplate() {
         loadChecklistTemplates();
         alert(`Template "${templateName.trim()}" saved successfully!`);
     }
+}
+
+// ========== OTDR FILE UPLOAD FUNCTIONALITY ==========
+
+// Setup OTDR file upload
+function setupOtdrFileUpload() {
+    const otdrUpload = document.getElementById('otdrFiles');
+    
+    otdrUpload.addEventListener('change', function(e) {
+        const files = Array.from(e.target.files);
+        
+        files.forEach(file => {
+            const reader = new FileReader();
+            
+            reader.onload = function(event) {
+                const fileData = {
+                    id: Date.now() + Math.random(),
+                    name: file.name,
+                    size: file.size,
+                    type: file.type,
+                    data: event.target.result
+                };
+                
+                currentOtdrFiles.push(fileData);
+                displayOtdrFilePreview(fileData);
+            };
+            
+            reader.readAsDataURL(file);
+        });
+        
+        // Clear input to allow same file to be selected again
+        e.target.value = '';
+    });
+}
+
+// Display OTDR file preview
+function displayOtdrFilePreview(file) {
+    const container = document.getElementById('otdrFilesPreview');
+    
+    const fileItem = document.createElement('div');
+    fileItem.className = 'file-preview-item';
+    fileItem.setAttribute('data-file-id', file.id);
+    
+    const fileSize = formatFileSize(file.size);
+    const fileIcon = getFileIcon(file.name);
+    
+    fileItem.innerHTML = `
+        <span class="file-icon">${fileIcon}</span>
+        <span class="file-name">${file.name}</span>
+        <span class="file-size">${fileSize}</span>
+        <button onclick="removeOtdrFile(${file.id})">Remove</button>
+    `;
+    
+    container.appendChild(fileItem);
+}
+
+// Remove OTDR file
+function removeOtdrFile(fileId) {
+    currentOtdrFiles = currentOtdrFiles.filter(f => f.id !== fileId);
+    const fileItem = document.querySelector(`[data-file-id="${fileId}"]`);
+    if (fileItem) {
+        fileItem.remove();
+    }
+}
+
+// Download OTDR file
+function downloadOtdrFile(fileData, fileName) {
+    const link = document.createElement('a');
+    link.href = fileData;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+// Format file size
+function formatFileSize(bytes) {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+}
+
+// Get file icon
+function getFileIcon(fileName) {
+    const ext = fileName.split('.').pop().toLowerCase();
+    const icons = {
+        'sor': '📊',
+        'pdf': '📄',
+        'zip': '📦',
+        'default': '📁'
+    };
+    return icons[ext] || icons['default'];
+}
+
+// ========== PDF EXPORT FUNCTIONALITY ==========
+
+// Export installation report as PDF
+function exportReportAsPDF(installationId) {
+    const installations = getInstallations();
+    const installation = installations.find(inst => inst.id === installationId);
+    
+    if (!installation) {
+        alert('Installation not found');
+        return;
+    }
+    
+    // Create a print-friendly window
+    const printWindow = window.open('', '_blank');
+    
+    const htmlContent = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>B2Bsluttdokumentasjon - ${installation.projectName}</title>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    padding: 40px;
+                    max-width: 800px;
+                    margin: 0 auto;
+                }
+                h1 {
+                    color: #667eea;
+                    border-bottom: 3px solid #667eea;
+                    padding-bottom: 10px;
+                }
+                h2 {
+                    color: #764ba2;
+                    margin-top: 30px;
+                    border-bottom: 2px solid #e9ecef;
+                    padding-bottom: 5px;
+                }
+                .section {
+                    margin-bottom: 25px;
+                }
+                .detail-grid {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 15px;
+                    margin-bottom: 15px;
+                }
+                .detail-item {
+                    margin-bottom: 10px;
+                }
+                .detail-label {
+                    font-weight: bold;
+                    color: #495057;
+                }
+                .detail-value {
+                    color: #6c757d;
+                }
+                .status-badge {
+                    display: inline-block;
+                    padding: 5px 15px;
+                    border-radius: 12px;
+                    font-weight: bold;
+                }
+                .status-passed { background: #d4edda; color: #155724; }
+                .status-failed { background: #f8d7da; color: #721c24; }
+                .status-pending { background: #fff3cd; color: #856404; }
+                .checklist {
+                    margin-top: 15px;
+                }
+                .checklist-item {
+                    padding: 8px;
+                    margin-bottom: 5px;
+                    border-left: 3px solid #667eea;
+                    background: #f8f9fa;
+                }
+                .checklist-item.checked {
+                    background: #d4edda;
+                    text-decoration: line-through;
+                }
+                .photo-list {
+                    margin-top: 10px;
+                }
+                .photo-item {
+                    padding: 5px 0;
+                    border-bottom: 1px solid #e9ecef;
+                }
+                .file-list {
+                    margin-top: 10px;
+                }
+                .file-item {
+                    padding: 5px 0;
+                    border-bottom: 1px solid #e9ecef;
+                }
+                @media print {
+                    body { padding: 20px; }
+                    .no-print { display: none; }
+                }
+            </style>
+        </head>
+        <body>
+            <h1>📡 B2Bsluttdokumentasjon</h1>
+            <h2>Fiber Optic Installation Report</h2>
+            
+            <div class="section">
+                <h2>Project Information</h2>
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <div class="detail-label">Project Name:</div>
+                        <div class="detail-value">${installation.projectName}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Location:</div>
+                        <div class="detail-value">${installation.location}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Client:</div>
+                        <div class="detail-value">${installation.client || 'N/A'}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Installation Date:</div>
+                        <div class="detail-value">${formatDate(installation.installDate)}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Technician:</div>
+                        <div class="detail-value">${installation.technician || 'N/A'}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Status:</div>
+                        <div class="detail-value">
+                            <span class="status-badge status-${installation.testResults.toLowerCase()}">${installation.testResults}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>Cable Specifications</h2>
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <div class="detail-label">Cable Type:</div>
+                        <div class="detail-value">${installation.cableType}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Fiber Count:</div>
+                        <div class="detail-value">${installation.fiberCount}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Cable Length:</div>
+                        <div class="detail-value">${installation.cableLength}m</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Manufacturer:</div>
+                        <div class="detail-value">${installation.manufacturer || 'N/A'}</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>Splice Information</h2>
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <div class="detail-label">Splice Type:</div>
+                        <div class="detail-value">${installation.spliceType || 'N/A'}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Splice Count:</div>
+                        <div class="detail-value">${installation.spliceCount || '0'}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Avg Splice Loss:</div>
+                        <div class="detail-value">${installation.avgSpliceLoss ? installation.avgSpliceLoss + ' dB' : 'N/A'}</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>Testing Results</h2>
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <div class="detail-label">OTDR Test:</div>
+                        <div class="detail-value">${installation.otdrTest}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Insertion Loss:</div>
+                        <div class="detail-value">${installation.insertionLoss ? installation.insertionLoss + ' dB' : 'N/A'}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Return Loss:</div>
+                        <div class="detail-value">${installation.returnLoss ? installation.returnLoss + ' dB' : 'N/A'}</div>
+                    </div>
+                </div>
+                ${installation.otdrFiles && installation.otdrFiles.length > 0 ? `
+                    <div class="detail-item">
+                        <div class="detail-label">OTDR Measurement Files (${installation.otdrFiles.length}):</div>
+                        <div class="file-list">
+                            ${installation.otdrFiles.map(file => `
+                                <div class="file-item">${getFileIcon(file.name)} ${file.name} (${formatFileSize(file.size)})</div>
+                            `).join('')}
+                        </div>
+                    </div>
+                ` : ''}
+            </div>
+            
+            ${installation.notes ? `
+                <div class="section">
+                    <h2>Installation Notes</h2>
+                    <p>${installation.notes}</p>
+                </div>
+            ` : ''}
+            
+            ${installation.issues ? `
+                <div class="section">
+                    <h2>Issues Encountered</h2>
+                    <p>${installation.issues}</p>
+                </div>
+            ` : ''}
+            
+            ${installation.photoChecklist && installation.photoChecklist.length > 0 ? `
+                <div class="section">
+                    <h2>Photo Checklist</h2>
+                    <p>Completed: ${installation.photoChecklist.filter(i => i.checked).length}/${installation.photoChecklist.length}</p>
+                    <div class="checklist">
+                        ${installation.photoChecklist.map(item => `
+                            <div class="checklist-item ${item.checked ? 'checked' : ''}">
+                                ${item.checked ? '✓' : '☐'} ${item.text}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            ` : ''}
+            
+            ${installation.photos && installation.photos.length > 0 ? `
+                <div class="section">
+                    <h2>Installation Photos</h2>
+                    <p>Total photos: ${installation.photos.length}</p>
+                    <div class="photo-list">
+                        ${installation.photos.map(photo => `
+                            <div class="photo-item">📷 ${photo.name}</div>
+                        `).join('')}
+                    </div>
+                    <p><em>Note: Photos are available for download in the web application.</em></p>
+                </div>
+            ` : ''}
+            
+            <div class="section no-print" style="margin-top: 40px; text-align: center;">
+                <button onclick="window.print()" style="padding: 12px 24px; background: #667eea; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 16px;">Print / Save as PDF</button>
+                <button onclick="window.close()" style="padding: 12px 24px; background: #6c757d; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; margin-left: 10px;">Close</button>
+            </div>
+            
+            <div style="margin-top: 50px; padding-top: 20px; border-top: 1px solid #e9ecef; text-align: center; color: #6c757d; font-size: 12px;">
+                Generated: ${new Date().toLocaleString()}<br>
+                B2Bsluttdokumentasjon - Fiber Optic Installation Documentation System
+            </div>
+        </body>
+        </html>
+    `;
+    
+    printWindow.document.write(htmlContent);
+    printWindow.document.close();
 }
