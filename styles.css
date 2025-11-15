@@ -834,6 +834,242 @@ textarea {
     font-size: 1.1em;
 }
 
+/* Color Code Table Styles */
+.color-table-wrapper {
+    overflow-x: auto;
+    margin: 20px 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.color-code-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+.color-code-table thead {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.color-code-table th {
+    padding: 15px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.95em;
+    letter-spacing: 0.5px;
+}
+
+.color-code-table tbody tr {
+    border-bottom: 1px solid #e9ecef;
+    transition: background-color 0.2s ease;
+}
+
+.color-code-table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.color-code-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.color-code-table td {
+    padding: 12px 15px;
+    font-size: 0.95em;
+}
+
+.number-cell {
+    font-weight: bold;
+    color: #667eea;
+    font-size: 1.1em;
+    text-align: center;
+    width: 80px;
+}
+
+.name-cell {
+    font-weight: 600;
+    color: #333;
+    min-width: 120px;
+}
+
+.color-cell {
+    width: 100px;
+    text-align: center;
+}
+
+.color-box {
+    width: 60px;
+    height: 35px;
+    border-radius: 6px;
+    margin: 0 auto;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    display: inline-block;
+}
+
+.table-notes {
+    background: #e7f3ff;
+    border-left: 4px solid #667eea;
+    padding: 15px 20px;
+    margin: 20px 0;
+    border-radius: 6px;
+}
+
+.table-notes p {
+    margin-bottom: 10px;
+    color: #333;
+    font-weight: 600;
+}
+
+.table-notes ul {
+    list-style: none;
+    padding-left: 20px;
+}
+
+.table-notes ul li {
+    padding: 5px 0;
+    position: relative;
+    color: #555;
+    line-height: 1.6;
+}
+
+.table-notes ul li::before {
+    content: '•';
+    position: absolute;
+    left: -15px;
+    color: #667eea;
+    font-weight: bold;
+}
+
+/* Cable Configuration Cards - Enhanced */
+.config-details {
+    margin-top: 10px;
+}
+
+.config-details p {
+    margin: 8px 0;
+    color: #555;
+}
+
+.config-details strong {
+    color: #333;
+    display: inline-block;
+    min-width: 120px;
+}
+
+.tube-color {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    margin-right: 5px;
+    vertical-align: middle;
+    border: 1px solid #999;
+}
+
+/* Splicing Guide - Enhanced */
+.guide-section {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 4px solid #667eea;
+    margin-bottom: 20px;
+}
+
+.guide-section.warning {
+    border-left-color: #ffc107;
+    background: #fff3cd;
+}
+
+.guide-section.best-practice {
+    border-left-color: #28a745;
+    background: #d4edda;
+}
+
+.guide-section h4 {
+    color: #333;
+    font-size: 1.2em;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.guide-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.guide-list li {
+    padding: 10px 0;
+    padding-left: 25px;
+    position: relative;
+    color: #555;
+    line-height: 1.6;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.guide-list li:last-child {
+    border-bottom: none;
+}
+
+.guide-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #28a745;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.guide-section.warning .guide-list li::before {
+    content: '⚠';
+    color: #ff6b6b;
+}
+
+.guide-section.best-practice .guide-list li::before {
+    content: '✓';
+    color: #28a745;
+}
+
+/* Quick Reference Section */
+.quick-reference {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.ref-card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-top: 4px solid #667eea;
+}
+
+.ref-card h4 {
+    color: #667eea;
+    font-size: 1.2em;
+    margin-bottom: 15px;
+}
+
+.color-sequence {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.seq-item {
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 0.85em;
+    font-weight: 600;
+    display: inline-block;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 /* Responsive adjustments for color codes */
 @media (max-width: 768px) {
     .color-code-grid {
@@ -852,5 +1088,32 @@ textarea {
     
     .splicing-guide {
         grid-template-columns: 1fr;
+    }
+    
+    .color-code-table {
+        font-size: 0.85em;
+    }
+    
+    .color-code-table th,
+    .color-code-table td {
+        padding: 10px 8px;
+    }
+    
+    .color-box {
+        width: 40px;
+        height: 25px;
+    }
+    
+    .quick-reference {
+        grid-template-columns: 1fr;
+    }
+    
+    .color-sequence {
+        gap: 5px;
+    }
+    
+    .seq-item {
+        padding: 6px 10px;
+        font-size: 0.75em;
     }
 }
