@@ -91,7 +91,7 @@ function setupFormSubmit() {
         // Note: Keep checklist for reuse in next installation
         
         // Show success message
-        alert('Installation documented successfully!');
+        alert('Installasjon dokumentert!');
         
         // Switch to projects tab
         document.querySelector('[data-tab="projects"]').click();
@@ -130,8 +130,8 @@ function loadProjects(searchTerm = '') {
     if (installations.length === 0) {
         projectsList.innerHTML = `
             <div class="empty-state">
-                <h3>No installations documented yet</h3>
-                <p>Start by documenting your first fiber optic installation</p>
+                <h3>Ingen installasjoner dokumentert ennå</h3>
+                <p>Start med å dokumentere din første fiberoptiske installasjon</p>
             </div>
         `;
         return;
@@ -149,8 +149,8 @@ function loadProjects(searchTerm = '') {
     if (filtered.length === 0) {
         projectsList.innerHTML = `
             <div class="empty-state">
-                <h3>No projects found</h3>
-                <p>Try a different search term</p>
+                <h3>Ingen prosjekter funnet</h3>
+                <p>Prøv et annet søkeord</p>
             </div>
         `;
         return;
@@ -159,14 +159,14 @@ function loadProjects(searchTerm = '') {
     projectsList.innerHTML = filtered.map(inst => `
         <div class="project-card" onclick="viewProjectDetails(${inst.id})">
             <h3>${inst.projectName}</h3>
-            <div class="detail"><strong>Location:</strong> ${inst.location}</div>
-            <div class="detail"><strong>Client:</strong> ${inst.client || 'N/A'}</div>
-            <div class="detail"><strong>Date:</strong> ${formatDate(inst.installDate)}</div>
-            <div class="detail"><strong>Cable:</strong> ${inst.cableType} (${inst.fiberCount} fibers)</div>
-            <div class="detail"><strong>Length:</strong> ${inst.cableLength}m</div>
-            ${inst.photos && inst.photos.length > 0 ? `<div class="detail"><strong>Photos:</strong> ${inst.photos.length}</div>` : ''}
+            <div class="detail"><strong>Lokasjon:</strong> ${inst.location}</div>
+            <div class="detail"><strong>Kunde:</strong> ${inst.client || 'N/A'}</div>
+            <div class="detail"><strong>Dato:</strong> ${formatDate(inst.installDate)}</div>
+            <div class="detail"><strong>Kabel:</strong> ${inst.cableType} (${inst.fiberCount} fibre)</div>
+            <div class="detail"><strong>Lengde:</strong> ${inst.cableLength}m</div>
+            ${inst.photos && inst.photos.length > 0 ? `<div class="detail"><strong>Bilder:</strong> ${inst.photos.length}</div>` : ''}
             <span class="status-badge status-${inst.testResults.toLowerCase()}">${inst.testResults}</span>
-            <button onclick="event.stopPropagation(); deleteInstallation(${inst.id})" class="btn-delete">Delete</button>
+            <button onclick="event.stopPropagation(); deleteInstallation(${inst.id})" class="btn-delete">Slett</button>
         </div>
     `).join('');
 }
@@ -262,81 +262,81 @@ function renderReports(statusFilter = 'all') {
             <h3>${inst.projectName}</h3>
             <div class="report-details">
                 <div class="report-detail-item">
-                    <label>Location</label>
+                    <label>Lokasjon</label>
                     <span>${inst.location}</span>
                 </div>
                 <div class="report-detail-item">
-                    <label>Client</label>
+                    <label>Kunde</label>
                     <span>${inst.client || 'N/A'}</span>
                 </div>
                 <div class="report-detail-item">
-                    <label>Installation Date</label>
+                    <label>Installasjonsdato</label>
                     <span>${formatDate(inst.installDate)}</span>
                 </div>
                 <div class="report-detail-item">
-                    <label>Technician</label>
+                    <label>Tekniker</label>
                     <span>${inst.technician || 'N/A'}</span>
                 </div>
                 <div class="report-detail-item">
-                    <label>Cable Type</label>
+                    <label>Kabeltype</label>
                     <span>${inst.cableType}</span>
                 </div>
                 <div class="report-detail-item">
-                    <label>Fiber Count</label>
+                    <label>Antall Fibre</label>
                     <span>${inst.fiberCount}</span>
                 </div>
                 <div class="report-detail-item">
-                    <label>Cable Length</label>
+                    <label>Kabellengde</label>
                     <span>${inst.cableLength}m</span>
                 </div>
                 <div class="report-detail-item">
-                    <label>Manufacturer</label>
+                    <label>Produsent</label>
                     <span>${inst.manufacturer || 'N/A'}</span>
                 </div>
                 <div class="report-detail-item">
-                    <label>Splice Type</label>
+                    <label>Skjøtetype</label>
                     <span>${inst.spliceType || 'N/A'}</span>
                 </div>
                 <div class="report-detail-item">
-                    <label>Splice Count</label>
+                    <label>Antall Skjøter</label>
                     <span>${inst.spliceCount || '0'}</span>
                 </div>
                 <div class="report-detail-item">
-                    <label>Avg Splice Loss</label>
+                    <label>Gj.snitt. Skjøtetap</label>
                     <span>${inst.avgSpliceLoss ? inst.avgSpliceLoss + ' dB' : 'N/A'}</span>
                 </div>
                 <div class="report-detail-item">
-                    <label>OTDR Test</label>
+                    <label>OTDR-test</label>
                     <span>${inst.otdrTest}</span>
                 </div>
                 <div class="report-detail-item">
-                    <label>Insertion Loss</label>
+                    <label>Innsetningstap</label>
                     <span>${inst.insertionLoss ? inst.insertionLoss + ' dB' : 'N/A'}</span>
                 </div>
                 <div class="report-detail-item">
-                    <label>Return Loss</label>
+                    <label>Returtap</label>
                     <span>${inst.returnLoss ? inst.returnLoss + ' dB' : 'N/A'}</span>
                 </div>
                 <div class="report-detail-item">
-                    <label>Test Status</label>
+                    <label>Teststatus</label>
                     <span class="status-badge status-${inst.testResults.toLowerCase()}">${inst.testResults}</span>
                 </div>
             </div>
             ${inst.notes ? `
                 <div class="report-detail-item" style="margin-top: 15px;">
-                    <label>Notes</label>
+                    <label>Notater</label>
                     <span>${inst.notes}</span>
                 </div>
             ` : ''}
             ${inst.issues ? `
                 <div class="report-detail-item" style="margin-top: 15px;">
-                    <label>Issues</label>
+                    <label>Problemer</label>
                     <span>${inst.issues}</span>
                 </div>
             ` : ''}
             ${inst.photoChecklist && inst.photoChecklist.length > 0 ? `
                 <div class="report-detail-item" style="margin-top: 15px;">
-                    <label>Photo Checklist (${inst.photoChecklist.filter(i => i.checked).length}/${inst.photoChecklist.length} completed)</label>
+                    <label>Bildsjekkliste (${inst.photoChecklist.filter(i => i.checked).length}/${inst.photoChecklist.length} fullført)</label>
                     <div class="photo-checklist-container" style="max-height: 200px;">
                         ${inst.photoChecklist.map(item => `
                             <div class="checklist-item ${item.checked ? 'checked' : ''}">
@@ -349,14 +349,14 @@ function renderReports(statusFilter = 'all') {
             ` : ''}
             ${inst.otdrFiles && inst.otdrFiles.length > 0 ? `
                 <div class="report-detail-item" style="margin-top: 15px;">
-                    <label>OTDR Measurement Files (${inst.otdrFiles.length})</label>
+                    <label>OTDR-målefiler (${inst.otdrFiles.length})</label>
                     <div class="files-preview-container">
                         ${inst.otdrFiles.map(file => `
                             <div class="file-preview-item">
                                 <span class="file-icon">${getFileIcon(file.name)}</span>
                                 <span class="file-name">${file.name}</span>
                                 <span class="file-size">${formatFileSize(file.size)}</span>
-                                <button onclick="downloadOtdrFile('${file.data}', '${file.name}')">Download</button>
+                                <button onclick="downloadOtdrFile('${file.data}', '${file.name}')">Last ned</button>
                             </div>
                         `).join('')}
                     </div>
@@ -364,21 +364,21 @@ function renderReports(statusFilter = 'all') {
             ` : ''}
             ${inst.photos && inst.photos.length > 0 ? `
                 <div class="report-detail-item" style="margin-top: 15px;">
-                    <label>Installation Photos (${inst.photos.length})</label>
+                    <label>Installasjonsbilder (${inst.photos.length})</label>
                     <div class="photo-gallery">
                         ${inst.photos.map(photo => `
                             <div class="photo-gallery-item">
                                 <img src="${photo.data}" alt="${photo.name}">
                                 <div class="photo-name">${photo.name}</div>
-                                <button class="download-btn" onclick="downloadPhoto('${photo.data}', '${photo.name}')">Download</button>
+                                <button class="download-btn" onclick="downloadPhoto('${photo.data}', '${photo.name}')">Last ned</button>
                             </div>
                         `).join('')}
                     </div>
                 </div>
             ` : ''}
             <div style="margin-top: 15px; text-align: center;">
-                <button onclick="exportReportAsPDF(${inst.id})" class="btn btn-primary btn-pdf">Export as PDF</button>
-                <button onclick="sendReportByEmail(${inst.id})" class="btn btn-primary btn-email">Send via Email</button>
+                <button onclick="exportReportAsPDF(${inst.id})" class="btn btn-primary btn-pdf">Eksporter som PDF</button>
+                <button onclick="sendReportByEmail(${inst.id})" class="btn btn-primary btn-email">Send via E-post</button>
             </div>
         </div>
     `).join('');
@@ -389,7 +389,7 @@ function exportToJSON() {
     const installations = getInstallations();
     
     if (installations.length === 0) {
-        alert('No data to export');
+        alert('Ingen data å eksportere');
         return;
     }
     
@@ -398,7 +398,7 @@ function exportToJSON() {
     const url = URL.createObjectURL(dataBlob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `fiber-optic-installations-${new Date().toISOString().split('T')[0]}.json`;
+    link.download = `fiberoptisk-installasjoner-${new Date().toISOString().split('T')[0]}.json`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -407,12 +407,12 @@ function exportToJSON() {
 
 // Clear all data
 function clearAllData() {
-    if (confirm('Are you sure you want to delete all installation data? This cannot be undone.')) {
-        if (confirm('This will permanently delete all records. Are you absolutely sure?')) {
+    if (confirm('Er du sikker på at du vil slette alle installasjonsdata? Dette kan ikke angres.')) {
+        if (confirm('Dette vil permanent slette alle oppføringer. Er du helt sikker?')) {
             localStorage.removeItem(STORAGE_KEY);
             loadProjects();
             renderReports();
-            alert('All data has been cleared');
+            alert('Alle data er slettet');
         }
     }
 }
@@ -559,7 +559,7 @@ function sendReportByEmail(installationId) {
     // Open email client
     window.location.href = `mailto:?subject=${subject}&body=${body}`;
     
-    alert('Email client opened. Note: Photos must be downloaded separately from the report and attached manually to the email.');
+    alert('E-postklient åpnet. Merk: Bilder må lastes ned separat fra rapporten og legges ved e-posten manuelt.');
 }
 
 // ========== PHOTO CHECKLIST FUNCTIONALITY ==========
@@ -613,26 +613,26 @@ function getChecklistTemplates() {
 // Default checklist templates
 function getDefaultTemplates() {
     return {
-        'Standard Installation': [
-            'Main Distribution Frame',
-            'Intermediate Distribution Frame',
-            'Cable Route - Entry Point',
-            'Cable Route - Horizontal Runs',
-            'Cable Route - Vertical Runs',
-            'Splice Tray',
+        'Standardinstallasjon': [
+            'Hovedfordelingsramme',
+            'Mellomfordelingsramme',
+            'Kabelrute - Inngangspunkt',
+            'Kabelrute - Horisontale Løp',
+            'Kabelrute - Vertikale Løp',
+            'Skjøteskuff',
             'Patch Panel',
-            'Equipment Room',
-            'Cable Labels',
-            'Test Results Display'
+            'Utstyrsrom',
+            'Kabelmerkinger',
+            'Testresultater Visning'
         ],
-        'Building Installation': [
-            'Building Entrance',
-            'Basement/Utility Room',
-            'Floor Riser',
-            'Telecommunications Room',
-            'Desktop Outlets',
-            'Cable Pathways',
-            'Final Terminations'
+        'Bygningsinstallasjon': [
+            'Bygningsinng',
+            'Kjeller/Teknisk Rom',
+            'Etasjestiger',
+            'Telekommunikasjonsrom',
+            'Skrivebordsuttag',
+            'Kabelveier',
+            'Endelige Termineringer'
         ]
     };
 }
@@ -691,7 +691,7 @@ function renderPhotoChecklist() {
     const container = document.getElementById('photoChecklistContainer');
     
     if (photoChecklist.length === 0) {
-        container.innerHTML = '<div class="checklist-empty">No checklist items. Add items below or load a template.</div>';
+        container.innerHTML = '<div class="checklist-empty">Ingen sjekkliste-elementer. Legg til elementer nedenfor eller last en mal.</div>';
         return;
     }
     
@@ -710,18 +710,18 @@ function renderPhotoChecklist() {
 // Save current checklist as template
 function saveChecklistAsTemplate() {
     if (photoChecklist.length === 0) {
-        alert('Checklist is empty. Add items before saving as template.');
+        alert('Sjekklisten er tom. Legg til elementer før du lagrer som mal.');
         return;
     }
     
-    const templateName = prompt('Enter a name for this checklist template:');
+    const templateName = prompt('Skriv inn et navn for denne sjekklistemalen:');
     
     if (templateName && templateName.trim()) {
         const templates = getChecklistTemplates();
         templates[templateName.trim()] = photoChecklist.map(item => item.text);
         saveChecklistTemplates(templates);
         loadChecklistTemplates();
-        alert(`Template "${templateName.trim()}" saved successfully!`);
+        alert(`Mal "${templateName.trim()}" lagret!`);
     }
 }
 
@@ -827,7 +827,7 @@ function exportReportAsPDF(installationId) {
     const installation = installations.find(inst => inst.id === installationId);
     
     if (!installation) {
-        alert('Installation not found');
+        alert('Installasjon ikke funnet');
         return;
     }
     
@@ -921,29 +921,29 @@ function exportReportAsPDF(installationId) {
         </head>
         <body>
             <h1>📡 B2Bsluttdokumentasjon</h1>
-            <h2>Fiber Optic Installation Report</h2>
+            <h2>Fiberoptisk Installasjonsrapport</h2>
             
             <div class="section">
-                <h2>Project Information</h2>
+                <h2>Prosjektinformasjon</h2>
                 <div class="detail-grid">
                     <div class="detail-item">
-                        <div class="detail-label">Project Name:</div>
+                        <div class="detail-label">Prosjektnavn:</div>
                         <div class="detail-value">${installation.projectName}</div>
                     </div>
                     <div class="detail-item">
-                        <div class="detail-label">Location:</div>
+                        <div class="detail-label">Lokasjon:</div>
                         <div class="detail-value">${installation.location}</div>
                     </div>
                     <div class="detail-item">
-                        <div class="detail-label">Client:</div>
+                        <div class="detail-label">Kunde:</div>
                         <div class="detail-value">${installation.client || 'N/A'}</div>
                     </div>
                     <div class="detail-item">
-                        <div class="detail-label">Installation Date:</div>
+                        <div class="detail-label">Installasjonsdato:</div>
                         <div class="detail-value">${formatDate(installation.installDate)}</div>
                     </div>
                     <div class="detail-item">
-                        <div class="detail-label">Technician:</div>
+                        <div class="detail-label">Tekniker:</div>
                         <div class="detail-value">${installation.technician || 'N/A'}</div>
                     </div>
                     <div class="detail-item">
@@ -956,64 +956,64 @@ function exportReportAsPDF(installationId) {
             </div>
             
             <div class="section">
-                <h2>Cable Specifications</h2>
+                <h2>Kabelspesifikasjoner</h2>
                 <div class="detail-grid">
                     <div class="detail-item">
-                        <div class="detail-label">Cable Type:</div>
+                        <div class="detail-label">Kabeltype:</div>
                         <div class="detail-value">${installation.cableType}</div>
                     </div>
                     <div class="detail-item">
-                        <div class="detail-label">Fiber Count:</div>
+                        <div class="detail-label">Antall Fibre:</div>
                         <div class="detail-value">${installation.fiberCount}</div>
                     </div>
                     <div class="detail-item">
-                        <div class="detail-label">Cable Length:</div>
+                        <div class="detail-label">Kabellengde:</div>
                         <div class="detail-value">${installation.cableLength}m</div>
                     </div>
                     <div class="detail-item">
-                        <div class="detail-label">Manufacturer:</div>
+                        <div class="detail-label">Produsent:</div>
                         <div class="detail-value">${installation.manufacturer || 'N/A'}</div>
                     </div>
                 </div>
             </div>
             
             <div class="section">
-                <h2>Splice Information</h2>
+                <h2>Skjøteinformasjon</h2>
                 <div class="detail-grid">
                     <div class="detail-item">
-                        <div class="detail-label">Splice Type:</div>
+                        <div class="detail-label">Skjøtetype:</div>
                         <div class="detail-value">${installation.spliceType || 'N/A'}</div>
                     </div>
                     <div class="detail-item">
-                        <div class="detail-label">Splice Count:</div>
+                        <div class="detail-label">Antall Skjøter:</div>
                         <div class="detail-value">${installation.spliceCount || '0'}</div>
                     </div>
                     <div class="detail-item">
-                        <div class="detail-label">Avg Splice Loss:</div>
+                        <div class="detail-label">Gj.snitt. Skjøtetap:</div>
                         <div class="detail-value">${installation.avgSpliceLoss ? installation.avgSpliceLoss + ' dB' : 'N/A'}</div>
                     </div>
                 </div>
             </div>
             
             <div class="section">
-                <h2>Testing Results</h2>
+                <h2>Testresultater</h2>
                 <div class="detail-grid">
                     <div class="detail-item">
-                        <div class="detail-label">OTDR Test:</div>
+                        <div class="detail-label">OTDR-test:</div>
                         <div class="detail-value">${installation.otdrTest}</div>
                     </div>
                     <div class="detail-item">
-                        <div class="detail-label">Insertion Loss:</div>
+                        <div class="detail-label">Innsetningstap:</div>
                         <div class="detail-value">${installation.insertionLoss ? installation.insertionLoss + ' dB' : 'N/A'}</div>
                     </div>
                     <div class="detail-item">
-                        <div class="detail-label">Return Loss:</div>
+                        <div class="detail-label">Returtap:</div>
                         <div class="detail-value">${installation.returnLoss ? installation.returnLoss + ' dB' : 'N/A'}</div>
                     </div>
                 </div>
                 ${installation.otdrFiles && installation.otdrFiles.length > 0 ? `
                     <div class="detail-item">
-                        <div class="detail-label">OTDR Measurement Files (${installation.otdrFiles.length}):</div>
+                        <div class="detail-label">OTDR-målefiler (${installation.otdrFiles.length}):</div>
                         <div class="file-list">
                             ${installation.otdrFiles.map(file => `
                                 <div class="file-item">${getFileIcon(file.name)} ${file.name} (${formatFileSize(file.size)})</div>
@@ -1025,22 +1025,22 @@ function exportReportAsPDF(installationId) {
             
             ${installation.notes ? `
                 <div class="section">
-                    <h2>Installation Notes</h2>
+                    <h2>Installasjonsnotater</h2>
                     <p>${installation.notes}</p>
                 </div>
             ` : ''}
             
             ${installation.issues ? `
                 <div class="section">
-                    <h2>Issues Encountered</h2>
+                    <h2>Problemer Påtruffet</h2>
                     <p>${installation.issues}</p>
                 </div>
             ` : ''}
             
             ${installation.photoChecklist && installation.photoChecklist.length > 0 ? `
                 <div class="section">
-                    <h2>Photo Checklist</h2>
-                    <p>Completed: ${installation.photoChecklist.filter(i => i.checked).length}/${installation.photoChecklist.length}</p>
+                    <h2>Bildsjekkliste</h2>
+                    <p>Fullført: ${installation.photoChecklist.filter(i => i.checked).length}/${installation.photoChecklist.length}</p>
                     <div class="checklist">
                         ${installation.photoChecklist.map(item => `
                             <div class="checklist-item ${item.checked ? 'checked' : ''}">
@@ -1053,25 +1053,25 @@ function exportReportAsPDF(installationId) {
             
             ${installation.photos && installation.photos.length > 0 ? `
                 <div class="section">
-                    <h2>Installation Photos</h2>
-                    <p>Total photos: ${installation.photos.length}</p>
+                    <h2>Installasjonsbilder</h2>
+                    <p>Totalt antall bilder: ${installation.photos.length}</p>
                     <div class="photo-list">
                         ${installation.photos.map(photo => `
                             <div class="photo-item">📷 ${photo.name}</div>
                         `).join('')}
                     </div>
-                    <p><em>Note: Photos are available for download in the web application.</em></p>
+                    <p><em>Merk: Bilder er tilgjengelige for nedlasting i webapplikasjonen.</em></p>
                 </div>
             ` : ''}
             
             <div class="section no-print" style="margin-top: 40px; text-align: center;">
-                <button onclick="window.print()" style="padding: 12px 24px; background: #667eea; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 16px;">Print / Save as PDF</button>
-                <button onclick="window.close()" style="padding: 12px 24px; background: #6c757d; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; margin-left: 10px;">Close</button>
+                <button onclick="window.print()" style="padding: 12px 24px; background: #667eea; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 16px;">Skriv ut / Lagre som PDF</button>
+                <button onclick="window.close()" style="padding: 12px 24px; background: #6c757d; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; margin-left: 10px;">Lukk</button>
             </div>
             
             <div style="margin-top: 50px; padding-top: 20px; border-top: 1px solid #e9ecef; text-align: center; color: #6c757d; font-size: 12px;">
-                Generated: ${new Date().toLocaleString()}<br>
-                B2Bsluttdokumentasjon - Fiber Optic Installation Documentation System
+                Generert: ${new Date().toLocaleString('no-NO')}<br>
+                B2Bsluttdokumentasjon - Fiberoptisk Installasjonsdokumentasjonssystem
             </div>
         </body>
         </html>

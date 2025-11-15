@@ -1,30 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="no">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fiber Optic Installation Documentation - Bob</title>
+    <title>B2Bsluttdokumentasjon - Fiberoptisk Installasjonsdokumentasjon</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>📡 Fiber Optic Installation Documentation</h1>
-            <p class="subtitle">Professional documentation tool for fiber optic installations</p>
+            <h1>📡 Fiberoptisk Installasjonsdokumentasjon</h1>
+            <p class="subtitle">Profesjonelt dokumentasjonsverktøy for fiberoptiske installasjoner</p>
         </header>
 
         <nav class="tabs">
-            <button class="tab-button active" data-tab="projects">Projects</button>
-            <button class="tab-button" data-tab="new-installation">New Installation</button>
-            <button class="tab-button" data-tab="reports">Reports</button>
+            <button class="tab-button active" data-tab="projects">Prosjekter</button>
+            <button class="tab-button" data-tab="new-installation">Ny Installasjon</button>
+            <button class="tab-button" data-tab="reports">Rapporter</button>
         </nav>
 
         <!-- Projects Tab -->
         <div id="projects" class="tab-content active">
             <div class="section">
-                <h2>Installation Projects</h2>
+                <h2>Installasjonsprosjekter</h2>
                 <div class="search-bar">
-                    <input type="text" id="searchProjects" placeholder="Search projects...">
+                    <input type="text" id="searchProjects" placeholder="Søk prosjekter...">
                 </div>
                 <div id="projectsList" class="projects-grid">
                     <!-- Projects will be displayed here -->
@@ -35,36 +35,36 @@
         <!-- New Installation Tab -->
         <div id="new-installation" class="tab-content">
             <div class="section">
-                <h2>Document New Installation</h2>
+                <h2>Dokumenter Ny Installasjon</h2>
                 <form id="installationForm">
                     <!-- Project Information -->
                     <fieldset>
-                        <legend>Project Information</legend>
+                        <legend>Prosjektinformasjon</legend>
                         <div class="form-group">
-                            <label for="projectName">Project Name *</label>
+                            <label for="projectName">Prosjektnavn *</label>
                             <input type="text" id="projectName" required>
                         </div>
                         <div class="form-group">
-                            <label for="location">Location *</label>
+                            <label for="location">Lokasjon *</label>
                             <input type="text" id="location" required>
                         </div>
                         <div class="form-group">
-                            <label for="client">Client</label>
+                            <label for="client">Kunde</label>
                             <input type="text" id="client">
                         </div>
                         <div class="form-group">
-                            <label for="installDate">Installation Date *</label>
+                            <label for="installDate">Installasjonsdato *</label>
                             <input type="date" id="installDate" required>
                         </div>
                     </fieldset>
 
                     <!-- Fiber Cable Specifications -->
                     <fieldset>
-                        <legend>Fiber Cable Specifications</legend>
+                        <legend>Fiberkabelspesifikasjoner</legend>
                         <div class="form-group">
-                            <label for="cableType">Cable Type *</label>
+                            <label for="cableType">Kabeltype *</label>
                             <select id="cableType" required>
-                                <option value="">Select cable type</option>
+                                <option value="">Velg kabeltype</option>
                                 <option value="Single-mode">Single-mode</option>
                                 <option value="Multi-mode OM1">Multi-mode OM1</option>
                                 <option value="Multi-mode OM2">Multi-mode OM2</option>
@@ -74,120 +74,120 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="fiberCount">Fiber Count *</label>
+                            <label for="fiberCount">Antall Fibre *</label>
                             <input type="number" id="fiberCount" min="1" required>
                         </div>
                         <div class="form-group">
-                            <label for="cableLength">Cable Length (meters) *</label>
+                            <label for="cableLength">Kabellengde (meter) *</label>
                             <input type="number" id="cableLength" step="0.1" min="0" required>
                         </div>
                         <div class="form-group">
-                            <label for="manufacturer">Manufacturer</label>
+                            <label for="manufacturer">Produsent</label>
                             <input type="text" id="manufacturer">
                         </div>
                     </fieldset>
 
                     <!-- Splice Information -->
                     <fieldset>
-                        <legend>Splice Information</legend>
+                        <legend>Skjøteinformasjon</legend>
                         <div class="form-group">
-                            <label for="spliceType">Splice Type</label>
+                            <label for="spliceType">Skjøtetype</label>
                             <select id="spliceType">
-                                <option value="">Select splice type</option>
-                                <option value="Fusion">Fusion Splice</option>
-                                <option value="Mechanical">Mechanical Splice</option>
+                                <option value="">Velg skjøtetype</option>
+                                <option value="Fusion">Fusjonsskjøting</option>
+                                <option value="Mechanical">Mekanisk skjøting</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="spliceCount">Number of Splices</label>
+                            <label for="spliceCount">Antall Skjøter</label>
                             <input type="number" id="spliceCount" min="0" value="0">
                         </div>
                         <div class="form-group">
-                            <label for="avgSpliceLoss">Average Splice Loss (dB)</label>
+                            <label for="avgSpliceLoss">Gjennomsnittlig Skjøtetap (dB)</label>
                             <input type="number" id="avgSpliceLoss" step="0.01" min="0">
                         </div>
                     </fieldset>
 
                     <!-- Testing Results -->
                     <fieldset>
-                        <legend>Testing Results</legend>
+                        <legend>Testresultater</legend>
                         <div class="form-group">
-                            <label for="otdrTest">OTDR Test Performed</label>
+                            <label for="otdrTest">OTDR-test Utført</label>
                             <select id="otdrTest">
-                                <option value="Yes">Yes</option>
-                                <option value="No">No</option>
+                                <option value="Yes">Ja</option>
+                                <option value="No">Nei</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="otdrFiles">OTDR Measurement Files</label>
+                            <label for="otdrFiles">OTDR-målefiler</label>
                             <input type="file" id="otdrFiles" accept=".sor,.pdf,.zip" multiple>
-                            <small>Upload OTDR measurement files (SOR, PDF, ZIP)</small>
+                            <small>Last opp OTDR-målefiler (SOR, PDF, ZIP)</small>
                         </div>
                         <div id="otdrFilesPreview" class="files-preview-container">
                             <!-- OTDR file previews will appear here -->
                         </div>
                         <div class="form-group">
-                            <label for="insertionLoss">Insertion Loss (dB)</label>
+                            <label for="insertionLoss">Innsetningstap (dB)</label>
                             <input type="number" id="insertionLoss" step="0.01" min="0">
                         </div>
                         <div class="form-group">
-                            <label for="returnLoss">Return Loss (dB)</label>
+                            <label for="returnLoss">Returtap (dB)</label>
                             <input type="number" id="returnLoss" step="0.01" min="0">
                         </div>
                         <div class="form-group">
-                            <label for="testResults">Test Results Status</label>
+                            <label for="testResults">Testresultat Status</label>
                             <select id="testResults">
-                                <option value="Passed">Passed</option>
-                                <option value="Failed">Failed</option>
-                                <option value="Pending">Pending</option>
+                                <option value="Passed">Godkjent</option>
+                                <option value="Failed">Ikke godkjent</option>
+                                <option value="Pending">Avventer</option>
                             </select>
                         </div>
                     </fieldset>
 
                     <!-- Installation Details -->
                     <fieldset>
-                        <legend>Installation Details</legend>
+                        <legend>Installasjonsdetaljer</legend>
                         <div class="form-group">
-                            <label for="technician">Technician Name</label>
+                            <label for="technician">Teknikernavn</label>
                             <input type="text" id="technician">
                         </div>
                         <div class="form-group">
-                            <label for="notes">Installation Notes</label>
+                            <label for="notes">Installasjonsnotater</label>
                             <textarea id="notes" rows="4"></textarea>
                         </div>
                         <div class="form-group">
-                            <label for="issues">Issues Encountered</label>
+                            <label for="issues">Problemer Påtruffet</label>
                             <textarea id="issues" rows="3"></textarea>
                         </div>
                     </fieldset>
 
                     <!-- Installation Photos -->
                     <fieldset>
-                        <legend>Installation Photos</legend>
+                        <legend>Installasjonsbilder</legend>
                         
                         <!-- Photo Checklist -->
                         <div class="form-group">
-                            <label>Photo Checklist</label>
+                            <label>Bildsjekkliste</label>
                             <div class="checklist-controls">
                                 <select id="checklistTemplate" class="checklist-template-select">
-                                    <option value="">Load a template...</option>
+                                    <option value="">Last en mal...</option>
                                 </select>
-                                <button type="button" onclick="saveChecklistAsTemplate()" class="btn btn-secondary btn-small">Save as Template</button>
+                                <button type="button" onclick="saveChecklistAsTemplate()" class="btn btn-secondary btn-small">Lagre som Mal</button>
                             </div>
                             <div id="photoChecklistContainer" class="photo-checklist-container">
                                 <!-- Checklist items will appear here -->
                             </div>
                             <div class="checklist-add">
-                                <input type="text" id="newChecklistItem" placeholder="Add item to checklist (e.g., 'Main Distribution Frame')">
-                                <button type="button" onclick="addChecklistItem()" class="btn btn-primary btn-small">Add Item</button>
+                                <input type="text" id="newChecklistItem" placeholder="Legg til element i sjekkliste (f.eks. 'Hovedfordelingsramme')">
+                                <button type="button" onclick="addChecklistItem()" class="btn btn-primary btn-small">Legg til Element</button>
                             </div>
                         </div>
                         
                         <!-- Photo Upload -->
                         <div class="form-group">
-                            <label for="photoUpload">Add Photos</label>
+                            <label for="photoUpload">Legg til Bilder</label>
                             <input type="file" id="photoUpload" accept="image/*" multiple>
-                            <small>Select one or more images (JPG, PNG, etc.)</small>
+                            <small>Velg ett eller flere bilder (JPG, PNG, osv.)</small>
                         </div>
                         <div id="photoPreviewContainer" class="photo-preview-container">
                             <!-- Photo previews will appear here -->
@@ -195,8 +195,8 @@
                     </fieldset>
 
                     <div class="form-actions">
-                        <button type="submit" class="btn btn-primary">Save Installation</button>
-                        <button type="reset" class="btn btn-secondary">Clear Form</button>
+                        <button type="submit" class="btn btn-primary">Lagre Installasjon</button>
+                        <button type="reset" class="btn btn-secondary">Nullstill Skjema</button>
                     </div>
                 </form>
             </div>
@@ -205,15 +205,15 @@
         <!-- Reports Tab -->
         <div id="reports" class="tab-content">
             <div class="section">
-                <h2>Installation Reports</h2>
+                <h2>Installasjonsrapporter</h2>
                 <div class="report-filters">
                     <div class="form-group">
-                        <label for="filterStatus">Filter by Status:</label>
+                        <label for="filterStatus">Filtrer etter Status:</label>
                         <select id="filterStatus">
-                            <option value="all">All</option>
-                            <option value="Passed">Passed</option>
-                            <option value="Failed">Failed</option>
-                            <option value="Pending">Pending</option>
+                            <option value="all">Alle</option>
+                            <option value="Passed">Godkjent</option>
+                            <option value="Failed">Ikke godkjent</option>
+                            <option value="Pending">Avventer</option>
                         </select>
                     </div>
                 </div>
@@ -221,8 +221,8 @@
                     <!-- Reports will be displayed here -->
                 </div>
                 <div class="export-actions">
-                    <button onclick="exportToJSON()" class="btn btn-primary">Export All Data (JSON)</button>
-                    <button onclick="clearAllData()" class="btn btn-danger">Clear All Data</button>
+                    <button onclick="exportToJSON()" class="btn btn-primary">Eksporter Alle Data (JSON)</button>
+                    <button onclick="clearAllData()" class="btn btn-danger">Slett Alle Data</button>
                 </div>
             </div>
         </div>
