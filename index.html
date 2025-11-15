@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B2Bsluttdokumentasjon - Fiberoptisk Installasjonsdokumentasjon</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📡 Fiberoptisk Installasjonsdokumentasjon</h1>
+            <p class="subtitle">Profesjonelt dokumentasjonsverktøy for fiberoptiske installasjoner</p>
+        </header>
+
+        <nav class="tabs">
+            <button class="tab-button active" data-tab="projects">Prosjekter</button>
+            <button class="tab-button" data-tab="new-installation">Ny Installasjon</button>
+            <button class="tab-button" data-tab="color-codes">Fargekoder</button>
+            <button class="tab-button" data-tab="reports">Rapporter</button>
+        </nav>
+
+        <!-- Projects Tab -->
+        <div id="projects" class="tab-content active">
+            <div class="section">
+                <h2>Installasjonsprosjekter</h2>
+                <div class="search-bar">
+                    <input type="text" id="searchProjects" placeholder="Søk prosjekter...">
+                </div>
+                <div id="projectsList" class="projects-grid">
+                    <!-- Projects will be displayed here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- New Installation Tab -->
+        <div id="new-installation" class="tab-content">
+            <div class="section">
+                <h2>Dokumenter Ny Installasjon</h2>
+                <form id="installationForm">
+                    <!-- Project Information -->
+                    <fieldset>
+                        <legend>Prosjektinformasjon</legend>
+                        <div class="form-group">
+                            <label for="projectName">Prosjektnavn *</label>
+                            <input type="text" id="projectName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="location">Lokasjon *</label>
+                            <input type="text" id="location" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="client">Kunde</label>
+                            <input type="text" id="client">
+                        </div>
+                        <div class="form-group">
+                            <label for="installDate">Installasjonsdato *</label>
+                            <input type="date" id="installDate" required>
+                        </div>
+                    </fieldset>
+
+                    <!-- Fiber Cable Specifications -->
+                    <fieldset>
+                        <legend>Fiberkabelspesifikasjoner</legend>
+                        <div class="form-group">
+                            <label for="cableType">Kabeltype *</label>
+                            <select id="cableType" required>
+                                <option value="">Velg kabeltype</option>
+                                <option value="Single-mode">Single-mode</option>
+                                <option value="Multi-mode OM1">Multi-mode OM1</option>
+                                <option value="Multi-mode OM2">Multi-mode OM2</option>
+                                <option value="Multi-mode OM3">Multi-mode OM3</option>
+                                <option value="Multi-mode OM4">Multi-mode OM4</option>
+                                <option value="Multi-mode OM5">Multi-mode OM5</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="fiberCount">Antall Fibre *</label>
+                            <input type="number" id="fiberCount" min="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cableLength">Kabellengde (meter) *</label>
+                            <input type="number" id="cableLength" step="0.1" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="manufacturer">Produsent</label>
+                            <input type="text" id="manufacturer">
+                        </div>
+                    </fieldset>
+
+                    <!-- Splice Information -->
+                    <fieldset>
+                        <legend>Skjøteinformasjon</legend>
+                        <div class="form-group">
+                            <label for="spliceType">Skjøtetype</label>
+                            <select id="spliceType">
+                                <option value="">Velg skjøtetype</option>
+                                <option value="Fusion">Fusjonsskjøting</option>
+                                <option value="Mechanical">Mekanisk skjøting</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="spliceCount">Antall Skjøter</label>
+                            <input type="number" id="spliceCount" min="0" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="avgSpliceLoss">Gjennomsnittlig Skjøtetap (dB)</label>
+                            <input type="number" id="avgSpliceLoss" step="0.01" min="0">
+                        </div>
+                    </fieldset>
+
+                    <!-- Testing Results -->
+                    <fieldset>
+                        <legend>Testresultater</legend>
+                        <div class="form-group">
+                            <label for="otdrTest">OTDR-test Utført</label>
+                            <select id="otdrTest">
+                                <option value="Yes">Ja</option>
+                                <option value="No">Nei</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="otdrFiles">OTDR-målefiler</label>
+                            <input type="file" id="otdrFiles" accept=".sor,.pdf,.zip" multiple>
+                            <small>Last opp OTDR-målefiler (SOR, PDF, ZIP)</small>
+                        </div>
+                        <div id="otdrFilesPreview" class="files-preview-container">
+                            <!-- OTDR file previews will appear here -->
+                        </div>
+                        <div class="form-group">
+                            <label for="insertionLoss">Innsetningstap (dB)</label>
+                            <input type="number" id="insertionLoss" step="0.01" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="returnLoss">Returtap (dB)</label>
+                            <input type="number" id="returnLoss" step="0.01" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="testResults">Testresultat Status</label>
+                            <select id="testResults">
+                                <option value="Passed">Godkjent</option>
+                                <option value="Failed">Ikke godkjent</option>
+                                <option value="Pending">Avventer</option>
+                            </select>
+                        </div>
+                    </fieldset>
+
+                    <!-- Installation Details -->
+                    <fieldset>
+                        <legend>Installasjonsdetaljer</legend>
+                        <div class="form-group">
+                            <label for="technician">Teknikernavn</label>
+                            <input type="text" id="technician">
+                        </div>
+                        <div class="form-group">
+                            <label for="notes">Installasjonsnotater</label>
+                            <textarea id="notes" rows="4"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="issues">Problemer Påtruffet</label>
+                            <textarea id="issues" rows="3"></textarea>
+                        </div>
+                    </fieldset>
+
+                    <!-- Installation Photos -->
+                    <fieldset>
+                        <legend>Installasjonsbilder</legend>
+                        
+                        <!-- Photo Checklist -->
+                        <div class="form-group">
+                            <label>Bildsjekkliste</label>
+                            <div class="checklist-controls">
+                                <select id="checklistTemplate" class="checklist-template-select">
+                                    <option value="">Last en mal...</option>
+                                </select>
+                                <button type="button" onclick="saveChecklistAsTemplate()" class="btn btn-secondary btn-small">Lagre som Mal</button>
+                            </div>
+                            <div id="photoChecklistContainer" class="photo-checklist-container">
+                                <!-- Checklist items will appear here -->
+                            </div>
+                            <div class="checklist-add">
+                                <input type="text" id="newChecklistItem" placeholder="Legg til element i sjekkliste (f.eks. 'Hovedfordelingsramme')">
+                                <button type="button" onclick="addChecklistItem()" class="btn btn-primary btn-small">Legg til Element</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Photo Upload -->
+                        <div class="form-group">
+                            <label for="photoUpload">Legg til Bilder</label>
+                            <input type="file" id="photoUpload" accept="image/*" multiple>
+                            <small>Velg ett eller flere bilder (JPG, PNG, osv.)</small>
+                        </div>
+                        <div id="photoPreviewContainer" class="photo-preview-container">
+                            <!-- Photo previews will appear here -->
+                        </div>
+                    </fieldset>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Lagre Installasjon</button>
+                        <button type="reset" class="btn btn-secondary">Nullstill Skjema</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Color Codes Tab -->
+        <!-- Color Codes Tab -->
+        <div id="color-codes" class="tab-content">
+            <div class="section">
+                <h2>🎨 Fargekoder for Fiberoptiske Kabler</h2>
+                <p class="color-codes-intro">Komplett referanseguide for standard fargekoding av fiberoptiske kabler basert på TIA/EIA-598-C standard. Denne guiden viser farger for både individuelle fibre og tuber/bundler.</p>
+                
+                <!-- Main Color Code Table -->
+                <div class="color-code-section">
+                    <h3>📋 Standard Fargekode-tabell (TIA/EIA-598-C)</h3>
+                    <div class="color-table-wrapper">
+                        <table class="color-code-table">
+                            <thead>
+                                <tr>
+                                    <th>Posisjon</th>
+                                    <th>Farge (Norsk)</th>
+                                    <th>Fargevisning</th>
+                                    <th>Farge (Engelsk)</th>
+                                    <th>Bruksområde</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="number-cell"><strong>1</strong></td>
+                                    <td class="name-cell"><strong>Blå</strong></td>
+                                    <td class="color-cell"><div class="color-box" style="background-color: #0000FF;"></div></td>
+                                    <td>Blue</td>
+                                    <td>Fiber 1, Tube 1, Bånd 1</td>
+                                </tr>
+                                <tr>
+                                    <td class="number-cell"><strong>2</strong></td>
+                                    <td class="name-cell"><strong>Oransje</strong></td>
+                                    <td class="color-cell"><div class="color-box" style="background-color: #FFA500;"></div></td>
+                                    <td>Orange</td>
+                                    <td>Fiber 2, Tube 2, Bånd 2</td>
+                                </tr>
+                                <tr>
+                                    <td class="number-cell"><strong>3</strong></td>
+                                    <td class="name-cell"><strong>Grønn</strong></td>
+                                    <td class="color-cell"><div class="color-box" style="background-color: #00FF00;"></div></td>
+                                    <td>Green</td>
+                                    <td>Fiber 3, Tube 3, Bånd 3</td>
+                                </tr>
+                                <tr>
+                                    <td class="number-cell"><strong>4</strong></td>
+                                    <td class="name-cell"><strong>Brun</strong></td>
+                                    <td class="color-cell"><div class="color-box" style="background-color: #8B4513;"></div></td>
+                                    <td>Brown</td>
+                                    <td>Fiber 4, Tube 4, Bånd 4</td>
+                                </tr>
+                                <tr>
+                                    <td class="number-cell"><strong>5</strong></td>
+                                    <td class="name-cell"><strong>Grå</strong></td>
+                                    <td class="color-cell"><div class="color-box" style="background-color: #808080;"></div></td>
+                                    <td>Gray / Grey</td>
+                                    <td>Fiber 5, Tube 5, Bånd 5</td>
+                                </tr>
+                                <tr>
+                                    <td class="number-cell"><strong>6</strong></td>
+                                    <td class="name-cell"><strong>Hvit</strong></td>
+                                    <td class="color-cell"><div class="color-box" style="background-color: #FFFFFF; border: 1px solid #999;"></div></td>
+                                    <td>White</td>
+                                    <td>Fiber 6, Tube 6, Bånd 6</td>
+                                </tr>
+                                <tr>
+                                    <td class="number-cell"><strong>7</strong></td>
+                                    <td class="name-cell"><strong>Rød</strong></td>
+                                    <td class="color-cell"><div class="color-box" style="background-color: #FF0000;"></div></td>
+                                    <td>Red</td>
+                                    <td>Fiber 7, Tube 7, Bånd 7</td>
+                                </tr>
+                                <tr>
+                                    <td class="number-cell"><strong>8</strong></td>
+                                    <td class="name-cell"><strong>Sort</strong></td>
+                                    <td class="color-cell"><div class="color-box" style="background-color: #000000;"></div></td>
+                                    <td>Black</td>
+                                    <td>Fiber 8, Tube 8, Bånd 8</td>
+                                </tr>
+                                <tr>
+                                    <td class="number-cell"><strong>9</strong></td>
+                                    <td class="name-cell"><strong>Gul</strong></td>
+                                    <td class="color-cell"><div class="color-box" style="background-color: #FFFF00;"></div></td>
+                                    <td>Yellow</td>
+                                    <td>Fiber 9, Tube 9, Bånd 9</td>
+                                </tr>
+                                <tr>
+                                    <td class="number-cell"><strong>10</strong></td>
+                                    <td class="name-cell"><strong>Fiolett</strong></td>
+                                    <td class="color-cell"><div class="color-box" style="background-color: #800080;"></div></td>
+                                    <td>Violet / Purple</td>
+                                    <td>Fiber 10, Tube 10, Bånd 10</td>
+                                </tr>
+                                <tr>
+                                    <td class="number-cell"><strong>11</strong></td>
+                                    <td class="name-cell"><strong>Rosa</strong></td>
+                                    <td class="color-cell"><div class="color-box" style="background-color: #FFC0CB;"></div></td>
+                                    <td>Pink / Rose</td>
+                                    <td>Fiber 11, Tube 11, Bånd 11</td>
+                                </tr>
+                                <tr>
+                                    <td class="number-cell"><strong>12</strong></td>
+                                    <td class="name-cell"><strong>Turkis</strong></td>
+                                    <td class="color-cell"><div class="color-box" style="background-color: #00FFFF;"></div></td>
+                                    <td>Aqua / Cyan</td>
+                                    <td>Fiber 12, Tube 12, Bånd 12</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-notes">
+                        <p><strong>📌 Viktig informasjon:</strong></p>
+                        <ul>
+                            <li><strong>Universell standard:</strong> Denne fargekoden gjelder for individuelle fibre, tuber/bundler og ribbonkabler</li>
+                            <li><strong>Repetisjon:</strong> For kabler med mer enn 12 tuber, gjentas fargesekvensen med ulike markeringer</li>
+                            <li><strong>Verifisering:</strong> Kontroller alltid med fiberskop eller VFL før skjøting</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Numbered Fiber Reference -->
+                <div class="color-code-section">
+                    <h3>🔢 Fiber-nummerering og Fargeoversikt</h3>
+                    <p class="section-description">Visuell oversikt over fiber-nummerering med tilhørende farger for rask identifikasjon</p>
+                    
+                    <div class="numbered-fiber-grid">
+                        <div class="numbered-fiber-card">
+                            <div class="fiber-number">1</div>
+                            <div class="fiber-color-display" style="background-color: #0000FF;"></div>
+                            <div class="fiber-name">Blå</div>
+                        </div>
+                        <div class="numbered-fiber-card">
+                            <div class="fiber-number">2</div>
+                            <div class="fiber-color-display" style="background-color: #FFA500;"></div>
+                            <div class="fiber-name">Oransje</div>
+                        </div>
+                        <div class="numbered-fiber-card">
+                            <div class="fiber-number">3</div>
+                            <div class="fiber-color-display" style="background-color: #00FF00;"></div>
+                            <div class="fiber-name">Grønn</div>
+                        </div>
+                        <div class="numbered-fiber-card">
+                            <div class="fiber-number">4</div>
+                            <div class="fiber-color-display" style="background-color: #8B4513;"></div>
+                            <div class="fiber-name">Brun</div>
+                        </div>
+                        <div class="numbered-fiber-card">
+                            <div class="fiber-number">5</div>
+                            <div class="fiber-color-display" style="background-color: #808080;"></div>
+                            <div class="fiber-name">Grå</div>
+                        </div>
+                        <div class="numbered-fiber-card">
+                            <div class="fiber-number">6</div>
+                            <div class="fiber-color-display" style="background-color: #FFFFFF; border: 2px solid #999;"></div>
+                            <div class="fiber-name">Hvit</div>
+                        </div>
+                        <div class="numbered-fiber-card">
+                            <div class="fiber-number">7</div>
+                            <div class="fiber-color-display" style="background-color: #FF0000;"></div>
+                            <div class="fiber-name">Rød</div>
+                        </div>
+                        <div class="numbered-fiber-card">
+                            <div class="fiber-number">8</div>
+                            <div class="fiber-color-display" style="background-color: #000000;"></div>
+                            <div class="fiber-name">Sort</div>
+                        </div>
+                        <div class="numbered-fiber-card">
+                            <div class="fiber-number">9</div>
+                            <div class="fiber-color-display" style="background-color: #FFFF00;"></div>
+                            <div class="fiber-name">Gul</div>
+                        </div>
+                        <div class="numbered-fiber-card">
+                            <div class="fiber-number">10</div>
+                            <div class="fiber-color-display" style="background-color: #800080;"></div>
+                            <div class="fiber-name">Fiolett</div>
+                        </div>
+                        <div class="numbered-fiber-card">
+                            <div class="fiber-number">11</div>
+                            <div class="fiber-color-display" style="background-color: #FFC0CB;"></div>
+                            <div class="fiber-name">Rosa</div>
+                        </div>
+                        <div class="numbered-fiber-card">
+                            <div class="fiber-number">12</div>
+                            <div class="fiber-color-display" style="background-color: #00FFFF;"></div>
+                            <div class="fiber-name">Turkis</div>
+                        </div>
+                    </div>
+                    
+                    <div class="fiber-reference-note">
+                        <p><strong>📌 Bruksanvisning:</strong></p>
+                        <ul>
+                            <li>Bruk dette skjemaet for rask visuell identifikasjon av fibernummer</li>
+                            <li>Denne nummereringen gjelder for fibre innenfor hver tube/bundle</li>
+                            <li>For multi-tube kabler: kombiner tube-farge med fiber-nummer (f.eks. "Blå tube, Fiber 3 (Grønn)")</li>
+                            <li>Alltid dobbeltsjekk med dokumentasjon ved skjøting</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Cable Configuration Examples -->
+                <div class="color-code-section">
+                    <h3>📊 Vanlige Kabelkonfigurasjoner</h3>
+                    <p class="section-description">Eksempler på hvordan fargekoder brukes i ulike kabelstørrelser</p>
+                    
+                    <div class="cable-config-grid">
+                        <div class="cable-config-card">
+                            <h4>12-fiber kabel</h4>
+                            <div class="config-details">
+                                <p><strong>Konfigurasjon:</strong> 1 tube × 12 fibre</p>
+                                <p><strong>Tube-farge:</strong> Blå (Tube 1)</p>
+                                <p><strong>Fibre:</strong></p>
+                                <ul class="fiber-list">
+                                    <li>Fiber 1-12: Følger standard fargekode</li>
+                                    <li>Alle fibre i én blå tube</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="cable-config-card">
+                            <h4>24-fiber kabel</h4>
+                            <div class="config-details">
+                                <p><strong>Konfigurasjon:</strong> 2 tuber × 12 fibre</p>
+                                <p><strong>Tube-farger:</strong> Blå, Oransje</p>
+                                <p><strong>Fibre:</strong></p>
+                                <ul class="fiber-list">
+                                    <li><span class="tube-color" style="background-color: #0000FF;"></span> Tube 1 (Blå): Fiber 1-12</li>
+                                    <li><span class="tube-color" style="background-color: #FFA500;"></span> Tube 2 (Oransje): Fiber 13-24</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="cable-config-card">
+                            <h4>48-fiber kabel</h4>
+                            <div class="config-details">
+                                <p><strong>Konfigurasjon:</strong> 4 tuber × 12 fibre</p>
+                                <p><strong>Tube-farger:</strong> Blå, Oransje, Grønn, Brun</p>
+                                <p><strong>Fibre:</strong></p>
+                                <ul class="fiber-list">
+                                    <li><span class="tube-color" style="background-color: #0000FF;"></span> Tube 1 (Blå): Fiber 1-12</li>
+                                    <li><span class="tube-color" style="background-color: #FFA500;"></span> Tube 2 (Oransje): Fiber 13-24</li>
+                                    <li><span class="tube-color" style="background-color: #00FF00;"></span> Tube 3 (Grønn): Fiber 25-36</li>
+                                    <li><span class="tube-color" style="background-color: #8B4513;"></span> Tube 4 (Brun): Fiber 37-48</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="cable-config-card">
+                            <h4>72-fiber kabel</h4>
+                            <div class="config-details">
+                                <p><strong>Konfigurasjon:</strong> 6 tuber × 12 fibre</p>
+                                <p><strong>Tube-farger:</strong> Blå til Hvit (1-6)</p>
+                                <p><strong>Fibre:</strong></p>
+                                <ul class="fiber-list">
+                                    <li>6 tuber følger fargekode 1-6</li>
+                                    <li>Hver tube inneholder fiber 1-12</li>
+                                    <li>Total: 72 fibre</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="cable-config-card">
+                            <h4>96-fiber kabel</h4>
+                            <div class="config-details">
+                                <p><strong>Konfigurasjon:</strong> 8 tuber × 12 fibre</p>
+                                <p><strong>Tube-farger:</strong> Blå til Sort (1-8)</p>
+                                <p><strong>Fibre:</strong></p>
+                                <ul class="fiber-list">
+                                    <li>8 tuber følger fargekode 1-8</li>
+                                    <li>Hver tube inneholder fiber 1-12</li>
+                                    <li>Total: 96 fibre</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="cable-config-card">
+                            <h4>144-fiber kabel</h4>
+                            <div class="config-details">
+                                <p><strong>Konfigurasjon:</strong> 12 tuber × 12 fibre</p>
+                                <p><strong>Tube-farger:</strong> Blå til Turkis (1-12)</p>
+                                <p><strong>Fibre:</strong></p>
+                                <ul class="fiber-list">
+                                    <li>12 tuber følger full fargekode</li>
+                                    <li>Hver tube inneholder fiber 1-12</li>
+                                    <li>Total: 144 fibre</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Splicing Guide -->
+                <div class="color-code-section">
+                    <h3>🔧 Skjøteveiledning</h3>
+                    
+                    <div class="splicing-guide">
+                        <div class="guide-section">
+                            <h4>📋 Grunnleggende Regler</h4>
+                            <ul class="guide-list">
+                                <li><strong>1-til-1 Regel:</strong> Skjøt alltid fiber 1 til fiber 1, fiber 2 til fiber 2, osv.</li>
+                                <li><strong>Tube-til-Tube:</strong> Blå tube skjøtes til blå tube, oransje til oransje, etc.</li>
+                                <li><strong>Fargematching:</strong> Samme farge skal alltid skjøtes sammen</li>
+                                <li><strong>Dokumentasjon:</strong> Dokumenter alltid skjøtesekvensen grundig</li>
+                                <li><strong>Verifisering:</strong> Bruk OTDR for å verifisere alle skjøter etter fullføring</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="guide-section warning">
+                            <h4>⚠️ Viktige Advarsler</h4>
+                            <ul class="guide-list">
+                                <li><strong>Produsentdokumentasjon:</strong> Kontroller ALLTID produsentens dokumentasjon først</li>
+                                <li><strong>Avvikende fargekoder:</strong> Noen produsenter kan bruke alternative fargekoder</li>
+                                <li><strong>Eldre kabler:</strong> Eldre installasjoner kan ha utdaterte fargekoder</li>
+                                <li><strong>Fiber-identifisering:</strong> Ved tvil, bruk fiberskop eller VFL (Visual Fault Locator)</li>
+                                <li><strong>Merking:</strong> Merk alle tuber og fibre tydelig under arbeid</li>
+                                <li><strong>Testing:</strong> Test hver skjøt individuelt før du går videre</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="guide-section best-practice">
+                            <h4>✅ Best Practice</h4>
+                            <ul class="guide-list">
+                                <li><strong>Forberedelse:</strong> Organiser alle fibre i korrekt rekkefølge FØR skjøting begynner</li>
+                                <li><strong>Etiketter:</strong> Bruk fargekodede etiketter på skjøteskuffer for enkel identifikasjon</li>
+                                <li><strong>Foto-dokumentasjon:</strong> Ta bilder av fargeidentifikasjon og kabellayout</li>
+                                <li><strong>Avvikslogging:</strong> Dokumenter ALLE avvik fra standard fargekode</li>
+                                <li><strong>Kvalitetskontroll:</strong> Utfør OTDR-test på alle fibre etter skjøting</li>
+                                <li><strong>Skjøtesekvens:</strong> Følg en systematisk skjøtesekvens for å unngå feil</li>
+                                <li><strong>Dobbeltsjekk:</strong> La alltid en annen person verifisere fargeidentifikasjon</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="guide-section">
+                            <h4>💡 Nyttige Tips</h4>
+                            <ul class="guide-list">
+                                <li><strong>Lyssetting:</strong> Sørg for god belysning når du identifiserer farger</li>
+                                <li><strong>Fargeblindhet:</strong> Bruk verktøy for fargeidentifikasjon hvis nødvendig</li>
+                                <li><strong>Renhold:</strong> Hold arbeidsområdet rent for å unngå forurensning av fibre</li>
+                                <li><strong>Buffer-tuber:</strong> Vær forsiktig med buffer-tuber; de er skjøre</li>
+                                <li><strong>Lengdemålinger:</strong> Mål og dokumenter lengder før klipping</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Reference -->
+                <div class="color-code-section">
+                    <h3>🔍 Hurtigreferanse</h3>
+                    <div class="quick-reference">
+                        <div class="ref-card">
+                            <h4>Standard Fargesekvens</h4>
+                            <p class="color-sequence">
+                                <span class="seq-item" style="background-color: #0000FF; color: white;">1-Blå</span>
+                                <span class="seq-item" style="background-color: #FFA500;">2-Oransje</span>
+                                <span class="seq-item" style="background-color: #00FF00;">3-Grønn</span>
+                                <span class="seq-item" style="background-color: #8B4513; color: white;">4-Brun</span>
+                                <span class="seq-item" style="background-color: #808080; color: white;">5-Grå</span>
+                                <span class="seq-item" style="background-color: #FFFFFF; border: 1px solid #999;">6-Hvit</span>
+                                <span class="seq-item" style="background-color: #FF0000; color: white;">7-Rød</span>
+                                <span class="seq-item" style="background-color: #000000; color: white;">8-Sort</span>
+                                <span class="seq-item" style="background-color: #FFFF00;">9-Gul</span>
+                                <span class="seq-item" style="background-color: #800080; color: white;">10-Fiolett</span>
+                                <span class="seq-item" style="background-color: #FFC0CB;">11-Rosa</span>
+                                <span class="seq-item" style="background-color: #00FFFF;">12-Turkis</span>
+                            </p>
+                        </div>
+                        
+                        <div class="ref-card">
+                            <h4>Huske-teknikk (Mnemoni)</h4>
+                            <p><strong>BOGBGHRSYGPT:</strong></p>
+                            <p>
+                                <strong>B</strong>lå, <strong>O</strong>ransje, <strong>G</strong>rønn, <strong>B</strong>run, 
+                                <strong>G</strong>rå, <strong>H</strong>vit, <strong>R</strong>ød, <strong>S</strong>ort, 
+                                <strong>Y</strong>ellow (Gul), <strong>P</strong>urple (Fiolett), Pin<strong>k</strong> (Rosa), <strong>T</strong>urkis
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reports Tab -->
+        <div id="reports" class="tab-content">
+            <div class="section">
+                <h2>Installasjonsrapporter</h2>
+                <div class="report-filters">
+                    <div class="form-group">
+                        <label for="filterStatus">Filtrer etter Status:</label>
+                        <select id="filterStatus">
+                            <option value="all">Alle</option>
+                            <option value="Passed">Godkjent</option>
+                            <option value="Failed">Ikke godkjent</option>
+                            <option value="Pending">Avventer</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="reportsList" class="reports-container">
+                    <!-- Reports will be displayed here -->
+                </div>
+                <div class="export-actions">
+                    <button onclick="exportToJSON()" class="btn btn-primary">Eksporter Alle Data (JSON)</button>
+                    <button onclick="clearAllData()" class="btn btn-danger">Slett Alle Data</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
