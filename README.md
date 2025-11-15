@@ -29,6 +29,20 @@ A professional web application for documenting fiber optic cable installations. 
 - Installation notes
 - Issues encountered documentation
 
+### 📸 Photo Documentation
+- Upload multiple photos per installation
+- Custom naming for each photo
+- Photo preview with editable names
+- Photo gallery in reports
+- Download individual photos
+- Photos stored securely in browser
+
+### 📧 Email Reporting
+- Send comprehensive reports via email
+- Auto-generated email with all installation details
+- Opens default email client
+- Photos can be downloaded and attached manually
+
 ### 📈 Reporting
 - Comprehensive installation reports
 - Filter by test status
@@ -50,6 +64,11 @@ A professional web application for documenting fiber optic cable installations. 
 2. **Document a New Installation**
    - Click on "New Installation" tab
    - Fill in the required fields (marked with *)
+   - **Add Photos (Optional):**
+     - Click "Choose Files" in the Installation Photos section
+     - Select one or more image files
+     - Edit photo names for easy identification
+     - Remove photos if needed before saving
    - Click "Save Installation"
 
 3. **View Projects**
@@ -61,6 +80,9 @@ A professional web application for documenting fiber optic cable installations. 
 4. **Generate Reports**
    - Click on "Reports" tab
    - Filter by test status (All/Passed/Failed/Pending)
+   - View installation photos in the photo gallery
+   - Download individual photos by clicking the download button
+   - **Send via Email:** Click "Send via Email" to open your email client with a pre-filled report
    - Export all data to JSON for backup or external processing
    - Clear all data if needed (with confirmation)
 
