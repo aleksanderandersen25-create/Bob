@@ -1,138 +1,161 @@
-# B2Bsluttdokumentasjon - Fiber Optic Installation Documentation App
+# B2Bsluttdokumentasjon - Fiberoptisk Installasjonsdokumentasjon
 
-A professional web application for documenting fiber optic cable installations. Track projects, cable specifications, splice information, testing results, OTDR measurement files, and generate comprehensive reports.
+En profesjonell nettapplikasjon for dokumentasjon av fiberoptiske kabelinstallasjoner. Spor prosjekter, kabelspesifikasjoner, skjøteinformasjon, testresultater, OTDR-målefiler, og generer omfattende rapporter på norsk.
 
 ## 🌐 Live App
 
-**Access the app at:** `https://aleksanderandersen25-create.github.io/Bob/`
+**Tilgang til appen:** `https://aleksanderandersen25-create.github.io/Bob/`
 
-## Features
+## Funksjoner
 
-### 📋 Project Management
-- Document multiple fiber optic installation projects
-- Search and filter projects
-- Track project details including location, client, and dates
+### 📋 Prosjektstyring
+- Dokumenter flere fiberoptiske installasjonsprosjekter
+- Søk og filtrer prosjekter
+- Spor prosjektdetaljer inkludert lokasjon, kunde og datoer
 
-### 🔌 Cable Specifications
-- Support for various cable types (Single-mode, Multi-mode OM1-OM5)
-- Track fiber count and cable length
-- Document manufacturer information
+### 🔌 Kabelspesifikasjoner
+- Støtte for ulike kabeltyper (Single-mode, Multi-mode OM1-OM5)
+- Spor fiberantall og kabellengde
+- Dokumenter produsentinformasjon
 
-### 🔧 Splice Documentation
-- Record fusion and mechanical splice information
-- Track splice counts and average splice loss
-- Document splice quality metrics
+### 🔧 Skjøtedokumentasjon
+- Registrer fusjons- og mekanisk skjøteinformasjon
+- Spor skjøteantall og gjennomsnittlig skjøtetap
+- Dokumenter skjøtekvalitetsmålinger
 
-### 📊 Testing Results
-- OTDR test documentation
-- Insertion loss and return loss measurements
-- Test status tracking (Passed/Failed/Pending)
+### 📊 Testresultater
+- OTDR-testdokumentasjon
+- Innsetningstap og returtap målinger
+- Teststatussporing (Godkjent/Ikke godkjent/Avventer)
 
-### 📝 Installation Details
-- Technician assignment
-- Installation notes
-- Issues encountered documentation
+### 📝 Installasjonsdetaljer
+- Teknikertildeling
+- Installasjonsnotater
+- Dokumentasjon av problemer påtruffet
 
-### 📸 Photo Documentation
-- Upload multiple photos per installation
-- Custom naming for each photo
-- Photo preview with editable names
-- Photo gallery in reports
-- Download individual photos
-- Photos stored securely in browser
+### 📸 Bildedokumentasjon
+- Last opp flere bilder per installasjon
+- Egendefinerte navn for hvert bilde
+- Bildeforhåndsvisning med redigerbare navn
+- Bildegalleri i rapporter
+- Last ned individuelle bilder
+- Bilder lagret sikkert i nettleser
 
-### 📋 Photo Checklist
-- Customizable checklist to track required photos
-- Pre-loaded templates: "Standard Installation" and "Building Installation"
-- Add custom checklist items
-- Check off items as photos are taken
-- Save custom checklists as reusable templates
-- Checklist persists across installations
+### 📋 Bildsjekkliste
+- Tilpassbar sjekkliste for å spore nødvendige bilder
+- Forhåndsinnlastede maler: "Standardinstallasjon" og "Bygningsinstallasjon"
+- Legg til egendefinerte sjekkliste-elementer
+- Kryss av elementer etter som bilder tas
+- Lagre egendefinerte sjekklister som gjenbrukbare maler
+- Sjekkliste vedvarer på tvers av installasjoner
 
-### 📊 OTDR File Management
-- Upload OTDR measurement files (SOR, PDF, ZIP formats)
-- Multiple file support per installation
-- File preview with name, size, and icon
-- Download OTDR files from reports
-- Files listed in PDF exports
+### 🎨 Fargekoder-referanse (NY!)
+- Komplett visuell guide for standard fiberoptiske fargekoder
+- Primære farger for fibre 1-12 (Blå, Oransje, Grønn, Brun, Grå, Hvit, Rød, Sort, Gul, Fiolett, Rosa, Turkis)
+- Tube/Bundle fargekoding (12 tuber)
+- Vanlige kabelkonfigurasjoner:
+  - 12-fiber kabel (1 tube)
+  - 24-fiber kabel (2 tuber)
+  - 48-fiber kabel (4 tuber)
+  - 72-fiber kabel (6 tuber)
+  - 96-fiber kabel (8 tuber)
+  - 144-fiber kabel (12 tuber)
+- Skjøteveiledning med generelle regler
+- Viktige merknader og advarsler
+- Best practice tips for skjøting
 
-### 📄 PDF Report Export
-- "Export as PDF" button on each report
-- Professional B2Bsluttdokumentasjon branded reports
-- Complete installation details
-- Photo checklist with completion status
-- OTDR files list
-- Print-friendly layout
+### 📊 OTDR-filhåndtering
+- Last opp OTDR-målefiler (SOR, PDF, ZIP-formater)
+- Støtte for flere filer per installasjon
+- Filforhåndsvisning med navn, størrelse og ikon
+- Last ned OTDR-filer fra rapporter
+- Filer listet i PDF-eksporter
 
-### 📧 Email Reporting
-- Send comprehensive reports via email
-- Auto-generated email with all installation details
-- Opens default email client
-- Photos can be downloaded and attached manually
+### 📄 PDF-rapporteksport
+- "Eksporter som PDF" knapp på hver rapport
+- Profesjonelle B2Bsluttdokumentasjon merkede rapporter
+- Fullstendige installasjonsdetaljer
+- Bildsjekkliste med fullføringsstatus
+- OTDR-filliste
+- Utskriftsvennlig layout
 
-### 📈 Reporting
-- Comprehensive installation reports
-- Filter by test status
-- Export data to JSON format
-- Data persistence using browser localStorage
+### 📧 E-postrapportering
+- Send omfattende rapporter via e-post
+- Auto-generert e-post med alle installasjonsdetaljer
+- Åpner standard e-postklient
+- Bilder kan lastes ned og legges ved manuelt
 
-## Getting Started
+### 📈 Rapportering
+- Omfattende installasjonsrapporter
+- Filtrer etter teststatus
+- Eksporter data til JSON-format
+- Datapersistens ved hjelp av nettleser localStorage
 
-### Prerequisites
-- A modern web browser (Chrome, Firefox, Safari, Edge)
-- No server or installation required!
+## Komme i gang
 
-### Usage
+### Forutsetninger
+- En moderne nettleser (Chrome, Firefox, Safari, Edge)
+- Ingen server eller installasjon nødvendig!
 
-1. **Access the App**
-   - Visit: `https://aleksanderandersen25-create.github.io/Bob/`
-   - Or open `index.html` locally in your browser
+### Bruk
 
-2. **Document a New Installation**
-   - Click on "New Installation" tab
-   - Fill in the required fields (marked with *)
-   - **Add OTDR Files:**
-     - Upload OTDR measurement files (.sor, .pdf, .zip)
-     - Files will be stored with the installation
-   - **Add Photos (Optional):**
-     - Click "Choose Files" in the Installation Photos section
-     - Select one or more image files
-     - Edit photo names for easy identification
-     - Remove photos if needed before saving
-   - **Photo Checklist:**
-     - Load a template or add custom items
-     - Check off items as you photograph locations
-     - Save your customized checklist as a template
-   - Click "Save Installation"
+1. **Tilgang til Appen**
+   - Besøk: `https://aleksanderandersen25-create.github.io/Bob/`
+   - Eller åpne `index.html` lokalt i nettleseren din
 
-3. **View Projects**
-   - Click on "Projects" tab to see all documented installations
-   - Use the search bar to find specific projects
-   - Click on a project card to view detailed information
-   - Delete projects as needed
+2. **Dokumenter en Ny Installasjon**
+   - Klikk på "Ny Installasjon" fanen
+   - Fyll inn de påkrevde feltene (merket med *)
+   - **Legg til OTDR-filer:**
+     - Last opp OTDR-målefiler (.sor, .pdf, .zip)
+     - Filer vil bli lagret med installasjonen
+   - **Legg til Bilder (Valgfritt):**
+     - Klikk "Velg Filer" i Installasjonsbilder-seksjonen
+     - Velg én eller flere bildefiler
+     - Rediger bildenavn for enkel identifikasjon
+     - Fjern bilder om nødvendig før lagring
+   - **Bildsjekkliste:**
+     - Last inn en mal eller legg til egendefinerte elementer
+     - Kryss av elementer etter som du fotograferer lokasjoner
+     - Lagre din tilpassede sjekkliste som en mal
+   - Klikk "Lagre Installasjon"
 
-4. **Generate Reports**
-   - Click on "Reports" tab
-   - Filter by test status (All/Passed/Failed/Pending)
-   - View photo checklist completion status
-   - Download OTDR files
-   - View installation photos in the photo gallery
-   - Download individual photos by clicking the download button
-   - **Export as PDF:** Click "Export as PDF" for a professional B2Bsluttdokumentasjon report
-   - **Send via Email:** Click "Send via Email" to open your email client with a pre-filled report
-   - Export all data to JSON for backup or external processing
-   - Clear all data if needed (with confirmation)
+3. **Se Prosjekter**
+   - Klikk på "Prosjekter" fanen for å se alle dokumenterte installasjoner
+   - Bruk søkefeltet for å finne spesifikke prosjekter
+   - Klikk på et prosjektkort for å se detaljert informasjon
+   - Slett prosjekter etter behov
 
-## Data Storage
+4. **Generer Rapporter**
+   - Klikk på "Rapporter" fanen
+   - Filtrer etter teststatus (Alle/Godkjent/Ikke godkjent/Avventer)
+   - Se fullføringsstatus for bildsjekkliste
+   - Last ned OTDR-filer
+   - Se installasjonsbilder i bildegalleriet
+   - Last ned individuelle bilder ved å klikke på nedlastingsknappen
+   - **Eksporter som PDF:** Klikk "Eksporter som PDF" for en profesjonell B2Bsluttdokumentasjon rapport
+   - **Send via E-post:** Klikk "Send via E-post" for å åpne e-postklienten din med en forhåndsutfylt rapport
+   - Eksporter alle data til JSON for backup eller ekstern behandling
+   - Slett alle data om nødvendig (med bekreftelse)
 
-All installation data is stored locally in your browser's localStorage. This means:
-- ✅ Your data persists between sessions
-- ✅ No internet connection required
-- ✅ Complete privacy - data never leaves your browser
-- ⚠️ Data is browser-specific (not synced across browsers)
-- ⚠️ Clearing browser data will delete installations
+5. **Bruk Fargekoder-referansen (NY!)**
+   - Klikk på "Fargekoder" fanen
+   - Se primære fiberfarger (1-12) med visuell fremstilling
+   - Se tube/bundle fargekoding
+   - Finn din kabelkonfigurasjon (12, 24, 48, 72, 96, 144 fibre)
+   - Les skjøteveiledning og best practice tips
+   - Bruk som referanse under skjøtearbeid
 
-**Recommendation**: Regularly export your data using the "Export All Data" button for backup purposes.
+## Datalagring
+
+All installasjonsdata lagres lokalt i nettleserens localStorage. Dette betyr:
+- ✅ Dataene dine vedvarer mellom økter
+- ✅ Ingen internettforbindelse nødvendig
+- ✅ Fullstendig personvern - data forlater aldri nettleseren din
+- ⚠️ Data er nettleserspesifikk (ikke synkronisert på tvers av nettlesere)
+- ⚠️ Sletting av nettleserdata vil slette installasjoner
+
+**Anbefaling**: Eksporter regelmessig dataene dine ved hjelp av "Eksporter Alle Data" knappen for backup-formål.
 
 ## Field Guide
 
