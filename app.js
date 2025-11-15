@@ -160,7 +160,7 @@ function loadProjects(searchTerm = '') {
         <div class="project-card" onclick="viewProjectDetails(${inst.id})">
             <h3>${inst.projectName}</h3>
             <div class="detail"><strong>Lokasjon:</strong> ${inst.location}</div>
-            <div class="detail"><strong>Kunde:</strong> ${inst.client || 'N/A'}</div>
+            <div class="detail"><strong>Kunde:</strong> ${inst.client || 'I/T'}</div>
             <div class="detail"><strong>Dato:</strong> ${formatDate(inst.installDate)}</div>
             <div class="detail"><strong>Kabel:</strong> ${inst.cableType} (${inst.fiberCount} fibre)</div>
             <div class="detail"><strong>Lengde:</strong> ${inst.cableLength}m</div>
@@ -179,34 +179,34 @@ function viewProjectDetails(id) {
     if (!installation) return;
     
     const details = `
-Project: ${installation.projectName}
-Location: ${installation.location}
-Client: ${installation.client || 'N/A'}
-Date: ${formatDate(installation.installDate)}
-Technician: ${installation.technician || 'N/A'}
+Prosjekt: ${installation.projectName}
+Lokasjon: ${installation.location}
+Kunde: ${installation.client || 'I/T'}
+Dato: ${formatDate(installation.installDate)}
+Tekniker: ${installation.technician || 'I/T'}
 
-CABLE SPECIFICATIONS:
+KABELSPESIFIKASJONER:
 - Type: ${installation.cableType}
-- Fiber Count: ${installation.fiberCount}
-- Length: ${installation.cableLength}m
-- Manufacturer: ${installation.manufacturer || 'N/A'}
+- Antall Fibre: ${installation.fiberCount}
+- Lengde: ${installation.cableLength}m
+- Produsent: ${installation.manufacturer || 'I/T'}
 
-SPLICE INFORMATION:
-- Type: ${installation.spliceType || 'N/A'}
-- Count: ${installation.spliceCount || '0'}
-- Avg Loss: ${installation.avgSpliceLoss || 'N/A'} dB
+SKJØTEINFORMASJON:
+- Type: ${installation.spliceType || 'I/T'}
+- Antall: ${installation.spliceCount || '0'}
+- Gj.snitt Tap: ${installation.avgSpliceLoss || 'I/T'} dB
 
-TESTING RESULTS:
+TESTRESULTATER:
 - OTDR Test: ${installation.otdrTest}
-- Insertion Loss: ${installation.insertionLoss || 'N/A'} dB
-- Return Loss: ${installation.returnLoss || 'N/A'} dB
+- Innsetningstap: ${installation.insertionLoss || 'I/T'} dB
+- Returtap: ${installation.returnLoss || 'I/T'} dB
 - Status: ${installation.testResults}
 
-NOTES:
-${installation.notes || 'No notes'}
+NOTATER:
+${installation.notes || 'Ingen notater'}
 
-ISSUES:
-${installation.issues || 'No issues reported'}
+PROBLEMER:
+${installation.issues || 'Ingen problemer rapportert'}
     `;
     
     alert(details);
@@ -236,8 +236,8 @@ function renderReports(statusFilter = 'all') {
     if (installations.length === 0) {
         reportsList.innerHTML = `
             <div class="empty-state">
-                <h3>No installation data available</h3>
-                <p>Document installations to generate reports</p>
+                <h3>Ingen installasjonsdata tilgjengelig</h3>
+                <p>Dokumenter installasjoner for å generere rapporter</p>
             </div>
         `;
         return;
@@ -251,7 +251,7 @@ function renderReports(statusFilter = 'all') {
     if (filtered.length === 0) {
         reportsList.innerHTML = `
             <div class="empty-state">
-                <h3>No installations with ${statusFilter} status</h3>
+                <h3>Ingen installasjoner med ${statusFilter} status</h3>
             </div>
         `;
         return;
@@ -267,7 +267,7 @@ function renderReports(statusFilter = 'all') {
                 </div>
                 <div class="report-detail-item">
                     <label>Kunde</label>
-                    <span>${inst.client || 'N/A'}</span>
+                    <span>${inst.client || 'I/T'}</span>
                 </div>
                 <div class="report-detail-item">
                     <label>Installasjonsdato</label>
@@ -275,7 +275,7 @@ function renderReports(statusFilter = 'all') {
                 </div>
                 <div class="report-detail-item">
                     <label>Tekniker</label>
-                    <span>${inst.technician || 'N/A'}</span>
+                    <span>${inst.technician || 'I/T'}</span>
                 </div>
                 <div class="report-detail-item">
                     <label>Kabeltype</label>
@@ -291,11 +291,11 @@ function renderReports(statusFilter = 'all') {
                 </div>
                 <div class="report-detail-item">
                     <label>Produsent</label>
-                    <span>${inst.manufacturer || 'N/A'}</span>
+                    <span>${inst.manufacturer || 'I/T'}</span>
                 </div>
                 <div class="report-detail-item">
                     <label>Skjøtetype</label>
-                    <span>${inst.spliceType || 'N/A'}</span>
+                    <span>${inst.spliceType || 'I/T'}</span>
                 </div>
                 <div class="report-detail-item">
                     <label>Antall Skjøter</label>
@@ -303,7 +303,7 @@ function renderReports(statusFilter = 'all') {
                 </div>
                 <div class="report-detail-item">
                     <label>Gj.snitt. Skjøtetap</label>
-                    <span>${inst.avgSpliceLoss ? inst.avgSpliceLoss + ' dB' : 'N/A'}</span>
+                    <span>${inst.avgSpliceLoss ? inst.avgSpliceLoss + ' dB' : 'I/T'}</span>
                 </div>
                 <div class="report-detail-item">
                     <label>OTDR-test</label>
@@ -311,11 +311,11 @@ function renderReports(statusFilter = 'all') {
                 </div>
                 <div class="report-detail-item">
                     <label>Innsetningstap</label>
-                    <span>${inst.insertionLoss ? inst.insertionLoss + ' dB' : 'N/A'}</span>
+                    <span>${inst.insertionLoss ? inst.insertionLoss + ' dB' : 'I/T'}</span>
                 </div>
                 <div class="report-detail-item">
                     <label>Returtap</label>
-                    <span>${inst.returnLoss ? inst.returnLoss + ' dB' : 'N/A'}</span>
+                    <span>${inst.returnLoss ? inst.returnLoss + ' dB' : 'I/T'}</span>
                 </div>
                 <div class="report-detail-item">
                     <label>Teststatus</label>
@@ -510,50 +510,50 @@ function sendReportByEmail(installationId) {
     const installation = installations.find(inst => inst.id === installationId);
     
     if (!installation) {
-        alert('Installation not found');
+        alert('Installasjon ikke funnet');
         return;
     }
     
     // Create email body with installation details
-    let emailBody = `FIBER OPTIC INSTALLATION REPORT\n\n`;
-    emailBody += `Project: ${installation.projectName}\n`;
-    emailBody += `Location: ${installation.location}\n`;
-    emailBody += `Client: ${installation.client || 'N/A'}\n`;
-    emailBody += `Installation Date: ${formatDate(installation.installDate)}\n`;
-    emailBody += `Technician: ${installation.technician || 'N/A'}\n\n`;
+    let emailBody = `FIBEROPTISK INSTALLASJONSRAPPORT\n\n`;
+    emailBody += `Prosjekt: ${installation.projectName}\n`;
+    emailBody += `Lokasjon: ${installation.location}\n`;
+    emailBody += `Kunde: ${installation.client || 'I/T'}\n`;
+    emailBody += `Installasjonsdato: ${formatDate(installation.installDate)}\n`;
+    emailBody += `Tekniker: ${installation.technician || 'I/T'}\n\n`;
     
-    emailBody += `CABLE SPECIFICATIONS:\n`;
+    emailBody += `KABELSPESIFIKASJONER:\n`;
     emailBody += `- Type: ${installation.cableType}\n`;
-    emailBody += `- Fiber Count: ${installation.fiberCount}\n`;
-    emailBody += `- Length: ${installation.cableLength}m\n`;
-    emailBody += `- Manufacturer: ${installation.manufacturer || 'N/A'}\n\n`;
+    emailBody += `- Antall Fibre: ${installation.fiberCount}\n`;
+    emailBody += `- Lengde: ${installation.cableLength}m\n`;
+    emailBody += `- Produsent: ${installation.manufacturer || 'I/T'}\n\n`;
     
-    emailBody += `SPLICE INFORMATION:\n`;
-    emailBody += `- Type: ${installation.spliceType || 'N/A'}\n`;
-    emailBody += `- Count: ${installation.spliceCount || '0'}\n`;
-    emailBody += `- Avg Loss: ${installation.avgSpliceLoss || 'N/A'} dB\n\n`;
+    emailBody += `SKJØTEINFORMASJON:\n`;
+    emailBody += `- Type: ${installation.spliceType || 'I/T'}\n`;
+    emailBody += `- Antall: ${installation.spliceCount || '0'}\n`;
+    emailBody += `- Gj.snitt Tap: ${installation.avgSpliceLoss || 'I/T'} dB\n\n`;
     
-    emailBody += `TESTING RESULTS:\n`;
+    emailBody += `TESTRESULTATER:\n`;
     emailBody += `- OTDR Test: ${installation.otdrTest}\n`;
-    emailBody += `- Insertion Loss: ${installation.insertionLoss || 'N/A'} dB\n`;
-    emailBody += `- Return Loss: ${installation.returnLoss || 'N/A'} dB\n`;
+    emailBody += `- Innsetningstap: ${installation.insertionLoss || 'I/T'} dB\n`;
+    emailBody += `- Returtap: ${installation.returnLoss || 'I/T'} dB\n`;
     emailBody += `- Status: ${installation.testResults}\n\n`;
     
     if (installation.notes) {
-        emailBody += `NOTES:\n${installation.notes}\n\n`;
+        emailBody += `NOTATER:\n${installation.notes}\n\n`;
     }
     
     if (installation.issues) {
-        emailBody += `ISSUES:\n${installation.issues}\n\n`;
+        emailBody += `PROBLEMER:\n${installation.issues}\n\n`;
     }
     
     if (installation.photos && installation.photos.length > 0) {
-        emailBody += `\nATTACHMENT NOTE: This installation includes ${installation.photos.length} photo(s).\n`;
-        emailBody += `Photos can be downloaded from the web application.\n`;
+        emailBody += `\nVEDLEGGSMERKNAD: Denne installasjonen inkluderer ${installation.photos.length} bilde(r).\n`;
+        emailBody += `Bilder kan lastes ned fra nettapplikasjonen.\n`;
     }
     
     // Create mailto link
-    const subject = encodeURIComponent(`Fiber Optic Installation Report - ${installation.projectName}`);
+    const subject = encodeURIComponent(`Fiberoptisk Installasjonsrapport - ${installation.projectName}`);
     const body = encodeURIComponent(emailBody);
     
     // Open email client
@@ -936,7 +936,7 @@ function exportReportAsPDF(installationId) {
                     </div>
                     <div class="detail-item">
                         <div class="detail-label">Kunde:</div>
-                        <div class="detail-value">${installation.client || 'N/A'}</div>
+                        <div class="detail-value">${installation.client || 'I/T'}</div>
                     </div>
                     <div class="detail-item">
                         <div class="detail-label">Installasjonsdato:</div>
@@ -944,7 +944,7 @@ function exportReportAsPDF(installationId) {
                     </div>
                     <div class="detail-item">
                         <div class="detail-label">Tekniker:</div>
-                        <div class="detail-value">${installation.technician || 'N/A'}</div>
+                        <div class="detail-value">${installation.technician || 'I/T'}</div>
                     </div>
                     <div class="detail-item">
                         <div class="detail-label">Status:</div>
@@ -972,7 +972,7 @@ function exportReportAsPDF(installationId) {
                     </div>
                     <div class="detail-item">
                         <div class="detail-label">Produsent:</div>
-                        <div class="detail-value">${installation.manufacturer || 'N/A'}</div>
+                        <div class="detail-value">${installation.manufacturer || 'I/T'}</div>
                     </div>
                 </div>
             </div>
@@ -982,7 +982,7 @@ function exportReportAsPDF(installationId) {
                 <div class="detail-grid">
                     <div class="detail-item">
                         <div class="detail-label">Skjøtetype:</div>
-                        <div class="detail-value">${installation.spliceType || 'N/A'}</div>
+                        <div class="detail-value">${installation.spliceType || 'I/T'}</div>
                     </div>
                     <div class="detail-item">
                         <div class="detail-label">Antall Skjøter:</div>
@@ -990,7 +990,7 @@ function exportReportAsPDF(installationId) {
                     </div>
                     <div class="detail-item">
                         <div class="detail-label">Gj.snitt. Skjøtetap:</div>
-                        <div class="detail-value">${installation.avgSpliceLoss ? installation.avgSpliceLoss + ' dB' : 'N/A'}</div>
+                        <div class="detail-value">${installation.avgSpliceLoss ? installation.avgSpliceLoss + ' dB' : 'I/T'}</div>
                     </div>
                 </div>
             </div>
@@ -1004,11 +1004,11 @@ function exportReportAsPDF(installationId) {
                     </div>
                     <div class="detail-item">
                         <div class="detail-label">Innsetningstap:</div>
-                        <div class="detail-value">${installation.insertionLoss ? installation.insertionLoss + ' dB' : 'N/A'}</div>
+                        <div class="detail-value">${installation.insertionLoss ? installation.insertionLoss + ' dB' : 'I/T'}</div>
                     </div>
                     <div class="detail-item">
                         <div class="detail-label">Returtap:</div>
-                        <div class="detail-value">${installation.returnLoss ? installation.returnLoss + ' dB' : 'N/A'}</div>
+                        <div class="detail-value">${installation.returnLoss ? installation.returnLoss + ' dB' : 'I/T'}</div>
                     </div>
                 </div>
                 ${installation.otdrFiles && installation.otdrFiles.length > 0 ? `
