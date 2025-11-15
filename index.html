@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fiber Optic Installation Documentation - Bob</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📡 Fiber Optic Installation Documentation</h1>
+            <p class="subtitle">Professional documentation tool for fiber optic installations</p>
+        </header>
+
+        <nav class="tabs">
+            <button class="tab-button active" data-tab="projects">Projects</button>
+            <button class="tab-button" data-tab="new-installation">New Installation</button>
+            <button class="tab-button" data-tab="reports">Reports</button>
+        </nav>
+
+        <!-- Projects Tab -->
+        <div id="projects" class="tab-content active">
+            <div class="section">
+                <h2>Installation Projects</h2>
+                <div class="search-bar">
+                    <input type="text" id="searchProjects" placeholder="Search projects...">
+                </div>
+                <div id="projectsList" class="projects-grid">
+                    <!-- Projects will be displayed here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- New Installation Tab -->
+        <div id="new-installation" class="tab-content">
+            <div class="section">
+                <h2>Document New Installation</h2>
+                <form id="installationForm">
+                    <!-- Project Information -->
+                    <fieldset>
+                        <legend>Project Information</legend>
+                        <div class="form-group">
+                            <label for="projectName">Project Name *</label>
+                            <input type="text" id="projectName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="location">Location *</label>
+                            <input type="text" id="location" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="client">Client</label>
+                            <input type="text" id="client">
+                        </div>
+                        <div class="form-group">
+                            <label for="installDate">Installation Date *</label>
+                            <input type="date" id="installDate" required>
+                        </div>
+                    </fieldset>
+
+                    <!-- Fiber Cable Specifications -->
+                    <fieldset>
+                        <legend>Fiber Cable Specifications</legend>
+                        <div class="form-group">
+                            <label for="cableType">Cable Type *</label>
+                            <select id="cableType" required>
+                                <option value="">Select cable type</option>
+                                <option value="Single-mode">Single-mode</option>
+                                <option value="Multi-mode OM1">Multi-mode OM1</option>
+                                <option value="Multi-mode OM2">Multi-mode OM2</option>
+                                <option value="Multi-mode OM3">Multi-mode OM3</option>
+                                <option value="Multi-mode OM4">Multi-mode OM4</option>
+                                <option value="Multi-mode OM5">Multi-mode OM5</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="fiberCount">Fiber Count *</label>
+                            <input type="number" id="fiberCount" min="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cableLength">Cable Length (meters) *</label>
+                            <input type="number" id="cableLength" step="0.1" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="manufacturer">Manufacturer</label>
+                            <input type="text" id="manufacturer">
+                        </div>
+                    </fieldset>
+
+                    <!-- Splice Information -->
+                    <fieldset>
+                        <legend>Splice Information</legend>
+                        <div class="form-group">
+                            <label for="spliceType">Splice Type</label>
+                            <select id="spliceType">
+                                <option value="">Select splice type</option>
+                                <option value="Fusion">Fusion Splice</option>
+                                <option value="Mechanical">Mechanical Splice</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="spliceCount">Number of Splices</label>
+                            <input type="number" id="spliceCount" min="0" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="avgSpliceLoss">Average Splice Loss (dB)</label>
+                            <input type="number" id="avgSpliceLoss" step="0.01" min="0">
+                        </div>
+                    </fieldset>
+
+                    <!-- Testing Results -->
+                    <fieldset>
+                        <legend>Testing Results</legend>
+                        <div class="form-group">
+                            <label for="otdrTest">OTDR Test Performed</label>
+                            <select id="otdrTest">
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="insertionLoss">Insertion Loss (dB)</label>
+                            <input type="number" id="insertionLoss" step="0.01" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="returnLoss">Return Loss (dB)</label>
+                            <input type="number" id="returnLoss" step="0.01" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="testResults">Test Results Status</label>
+                            <select id="testResults">
+                                <option value="Passed">Passed</option>
+                                <option value="Failed">Failed</option>
+                                <option value="Pending">Pending</option>
+                            </select>
+                        </div>
+                    </fieldset>
+
+                    <!-- Installation Details -->
+                    <fieldset>
+                        <legend>Installation Details</legend>
+                        <div class="form-group">
+                            <label for="technician">Technician Name</label>
+                            <input type="text" id="technician">
+                        </div>
+                        <div class="form-group">
+                            <label for="notes">Installation Notes</label>
+                            <textarea id="notes" rows="4"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="issues">Issues Encountered</label>
+                            <textarea id="issues" rows="3"></textarea>
+                        </div>
+                    </fieldset>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Save Installation</button>
+                        <button type="reset" class="btn btn-secondary">Clear Form</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Reports Tab -->
+        <div id="reports" class="tab-content">
+            <div class="section">
+                <h2>Installation Reports</h2>
+                <div class="report-filters">
+                    <div class="form-group">
+                        <label for="filterStatus">Filter by Status:</label>
+                        <select id="filterStatus">
+                            <option value="all">All</option>
+                            <option value="Passed">Passed</option>
+                            <option value="Failed">Failed</option>
+                            <option value="Pending">Pending</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="reportsList" class="reports-container">
+                    <!-- Reports will be displayed here -->
+                </div>
+                <div class="export-actions">
+                    <button onclick="exportToJSON()" class="btn btn-primary">Export All Data (JSON)</button>
+                    <button onclick="clearAllData()" class="btn btn-danger">Clear All Data</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
