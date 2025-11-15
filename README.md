@@ -1,6 +1,10 @@
-# Bob - Fiber Optic Installation Documentation App
+# B2Bsluttdokumentasjon - Fiber Optic Installation Documentation App
 
-A professional web application for documenting fiber optic cable installations. Track projects, cable specifications, splice information, testing results, and generate comprehensive reports.
+A professional web application for documenting fiber optic cable installations. Track projects, cable specifications, splice information, testing results, OTDR measurement files, and generate comprehensive reports.
+
+## 🌐 Live App
+
+**Access the app at:** `https://aleksanderandersen25-create.github.io/Bob/`
 
 ## Features
 
@@ -37,6 +41,29 @@ A professional web application for documenting fiber optic cable installations. 
 - Download individual photos
 - Photos stored securely in browser
 
+### 📋 Photo Checklist
+- Customizable checklist to track required photos
+- Pre-loaded templates: "Standard Installation" and "Building Installation"
+- Add custom checklist items
+- Check off items as photos are taken
+- Save custom checklists as reusable templates
+- Checklist persists across installations
+
+### 📊 OTDR File Management
+- Upload OTDR measurement files (SOR, PDF, ZIP formats)
+- Multiple file support per installation
+- File preview with name, size, and icon
+- Download OTDR files from reports
+- Files listed in PDF exports
+
+### 📄 PDF Report Export
+- "Export as PDF" button on each report
+- Professional B2Bsluttdokumentasjon branded reports
+- Complete installation details
+- Photo checklist with completion status
+- OTDR files list
+- Print-friendly layout
+
 ### 📧 Email Reporting
 - Send comprehensive reports via email
 - Auto-generated email with all installation details
@@ -57,18 +84,25 @@ A professional web application for documenting fiber optic cable installations. 
 
 ### Usage
 
-1. **Open the Application**
-   - Simply open `index.html` in your web browser
-   - Or host it on any web server
+1. **Access the App**
+   - Visit: `https://aleksanderandersen25-create.github.io/Bob/`
+   - Or open `index.html` locally in your browser
 
 2. **Document a New Installation**
    - Click on "New Installation" tab
    - Fill in the required fields (marked with *)
+   - **Add OTDR Files:**
+     - Upload OTDR measurement files (.sor, .pdf, .zip)
+     - Files will be stored with the installation
    - **Add Photos (Optional):**
      - Click "Choose Files" in the Installation Photos section
      - Select one or more image files
      - Edit photo names for easy identification
      - Remove photos if needed before saving
+   - **Photo Checklist:**
+     - Load a template or add custom items
+     - Check off items as you photograph locations
+     - Save your customized checklist as a template
    - Click "Save Installation"
 
 3. **View Projects**
@@ -80,8 +114,11 @@ A professional web application for documenting fiber optic cable installations. 
 4. **Generate Reports**
    - Click on "Reports" tab
    - Filter by test status (All/Passed/Failed/Pending)
+   - View photo checklist completion status
+   - Download OTDR files
    - View installation photos in the photo gallery
    - Download individual photos by clicking the download button
+   - **Export as PDF:** Click "Export as PDF" for a professional B2Bsluttdokumentasjon report
    - **Send via Email:** Click "Send via Email" to open your email client with a pre-filled report
    - Export all data to JSON for backup or external processing
    - Clear all data if needed (with confirmation)
