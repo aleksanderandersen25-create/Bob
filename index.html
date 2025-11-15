@@ -156,6 +156,26 @@
                     <!-- Installation Photos -->
                     <fieldset>
                         <legend>Installation Photos</legend>
+                        
+                        <!-- Photo Checklist -->
+                        <div class="form-group">
+                            <label>Photo Checklist</label>
+                            <div class="checklist-controls">
+                                <select id="checklistTemplate" class="checklist-template-select">
+                                    <option value="">Load a template...</option>
+                                </select>
+                                <button type="button" onclick="saveChecklistAsTemplate()" class="btn btn-secondary btn-small">Save as Template</button>
+                            </div>
+                            <div id="photoChecklistContainer" class="photo-checklist-container">
+                                <!-- Checklist items will appear here -->
+                            </div>
+                            <div class="checklist-add">
+                                <input type="text" id="newChecklistItem" placeholder="Add item to checklist (e.g., 'Main Distribution Frame')">
+                                <button type="button" onclick="addChecklistItem()" class="btn btn-primary btn-small">Add Item</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Photo Upload -->
                         <div class="form-group">
                             <label for="photoUpload">Add Photos</label>
                             <input type="file" id="photoUpload" accept="image/*" multiple>

@@ -1,8 +1,11 @@
 // Storage key for localStorage
 const STORAGE_KEY = 'fiberOpticInstallations';
+const CHECKLIST_TEMPLATES_KEY = 'photoChecklistTemplates';
 
 // Global array to store photos temporarily during form input
 let currentPhotos = [];
+// Global array for photo checklist items
+let photoChecklist = [];
 
 // Initialize application
 document.addEventListener('DOMContentLoaded', function() {
@@ -12,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
     setupSearch();
     setupReportFilters();
     setupPhotoUpload();
+    setupPhotoChecklist();
     renderReports();
 });
 
@@ -70,6 +74,7 @@ function setupFormSubmit() {
             notes: document.getElementById('notes').value,
             issues: document.getElementById('issues').value,
             photos: currentPhotos, // Add photos to installation data
+            photoChecklist: photoChecklist, // Add checklist to installation data
             createdAt: new Date().toISOString()
         };
         
@@ -77,6 +82,7 @@ function setupFormSubmit() {
         form.reset();
         currentPhotos = []; // Clear photos array
         document.getElementById('photoPreviewContainer').innerHTML = ''; // Clear preview
+        // Note: Keep checklist for reuse in next installation
         
         // Show success message
         alert('Installation documented successfully!');
@@ -322,6 +328,19 @@ function renderReports(statusFilter = 'all') {
                     <span>${inst.issues}</span>
                 </div>
             ` : ''}
+            ${inst.photoChecklist && inst.photoChecklist.length > 0 ? `
+                <div class="report-detail-item" style="margin-top: 15px;">
+                    <label>Photo Checklist (${inst.photoChecklist.filter(i => i.checked).length}/${inst.photoChecklist.length} completed)</label>
+                    <div class="photo-checklist-container" style="max-height: 200px;">
+                        ${inst.photoChecklist.map(item => `
+                            <div class="checklist-item ${item.checked ? 'checked' : ''}">
+                                <input type="checkbox" ${item.checked ? 'checked' : ''} disabled>
+                                <label>${item.text}</label>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            ` : ''}
             ${inst.photos && inst.photos.length > 0 ? `
                 <div class="report-detail-item" style="margin-top: 15px;">
                     <label>Installation Photos (${inst.photos.length})</label>
@@ -519,4 +538,167 @@ function sendReportByEmail(installationId) {
     window.location.href = `mailto:?subject=${subject}&body=${body}`;
     
     alert('Email client opened. Note: Photos must be downloaded separately from the report and attached manually to the email.');
+}
+
+// ========== PHOTO CHECKLIST FUNCTIONALITY ==========
+
+// Setup photo checklist
+function setupPhotoChecklist() {
+    loadChecklistTemplates();
+    renderPhotoChecklist();
+    
+    // Setup template selector
+    const templateSelect = document.getElementById('checklistTemplate');
+    templateSelect.addEventListener('change', function() {
+        if (this.value) {
+            loadChecklistTemplate(this.value);
+        }
+    });
+    
+    // Setup Enter key for adding items
+    const newItemInput = document.getElementById('newChecklistItem');
+    newItemInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            addChecklistItem();
+        }
+    });
+}
+
+// Load checklist templates from localStorage
+function loadChecklistTemplates() {
+    const templates = getChecklistTemplates();
+    const templateSelect = document.getElementById('checklistTemplate');
+    
+    // Clear existing options except first
+    templateSelect.innerHTML = '<option value="">Load a template...</option>';
+    
+    // Add template options
+    Object.keys(templates).forEach(templateName => {
+        const option = document.createElement('option');
+        option.value = templateName;
+        option.textContent = templateName;
+        templateSelect.appendChild(option);
+    });
+}
+
+// Get checklist templates from localStorage
+function getChecklistTemplates() {
+    const data = localStorage.getItem(CHECKLIST_TEMPLATES_KEY);
+    return data ? JSON.parse(data) : getDefaultTemplates();
+}
+
+// Default checklist templates
+function getDefaultTemplates() {
+    return {
+        'Standard Installation': [
+            'Main Distribution Frame',
+            'Intermediate Distribution Frame',
+            'Cable Route - Entry Point',
+            'Cable Route - Horizontal Runs',
+            'Cable Route - Vertical Runs',
+            'Splice Tray',
+            'Patch Panel',
+            'Equipment Room',
+            'Cable Labels',
+            'Test Results Display'
+        ],
+        'Building Installation': [
+            'Building Entrance',
+            'Basement/Utility Room',
+            'Floor Riser',
+            'Telecommunications Room',
+            'Desktop Outlets',
+            'Cable Pathways',
+            'Final Terminations'
+        ]
+    };
+}
+
+// Save checklist templates to localStorage
+function saveChecklistTemplates(templates) {
+    localStorage.setItem(CHECKLIST_TEMPLATES_KEY, JSON.stringify(templates));
+}
+
+// Load a specific template
+function loadChecklistTemplate(templateName) {
+    const templates = getChecklistTemplates();
+    if (templates[templateName]) {
+        photoChecklist = templates[templateName].map((item, index) => ({
+            id: Date.now() + index,
+            text: item,
+            checked: false
+        }));
+        renderPhotoChecklist();
+    }
+}
+
+// Add new checklist item
+function addChecklistItem() {
+    const input = document.getElementById('newChecklistItem');
+    const text = input.value.trim();
+    
+    if (text) {
+        photoChecklist.push({
+            id: Date.now(),
+            text: text,
+            checked: false
+        });
+        renderPhotoChecklist();
+        input.value = '';
+    }
+}
+
+// Remove checklist item
+function removeChecklistItem(itemId) {
+    photoChecklist = photoChecklist.filter(item => item.id !== itemId);
+    renderPhotoChecklist();
+}
+
+// Toggle checklist item
+function toggleChecklistItem(itemId) {
+    const item = photoChecklist.find(i => i.id === itemId);
+    if (item) {
+        item.checked = !item.checked;
+        renderPhotoChecklist();
+    }
+}
+
+// Render photo checklist
+function renderPhotoChecklist() {
+    const container = document.getElementById('photoChecklistContainer');
+    
+    if (photoChecklist.length === 0) {
+        container.innerHTML = '<div class="checklist-empty">No checklist items. Add items below or load a template.</div>';
+        return;
+    }
+    
+    container.innerHTML = photoChecklist.map(item => `
+        <div class="checklist-item ${item.checked ? 'checked' : ''}">
+            <input type="checkbox" 
+                   id="check-${item.id}" 
+                   ${item.checked ? 'checked' : ''} 
+                   onchange="toggleChecklistItem(${item.id})">
+            <label for="check-${item.id}">${item.text}</label>
+            <button onclick="removeChecklistItem(${item.id})">Remove</button>
+        </div>
+    `).join('');
+}
+
+// Save current checklist as template
+function saveChecklistAsTemplate() {
+    if (photoChecklist.length === 0) {
+        alert('Checklist is empty. Add items before saving as template.');
+        return;
+    }
+    
+    const templateName = prompt('Enter a name for this checklist template:');
+    
+    if (templateName && templateName.trim()) {
+        const templates = getChecklistTemplates();
+        templates[templateName.trim()] = photoChecklist.map(item => item.text);
+        saveChecklistTemplates(templates);
+        loadChecklistTemplates();
+        alert(`Template "${templateName.trim()}" saved successfully!`);
+    }
 }
