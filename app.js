@@ -1,6 +1,9 @@
 // Storage key for localStorage
 const STORAGE_KEY = 'fiberOpticInstallations';
 
+// Global array to store photos temporarily during form input
+let currentPhotos = [];
+
 // Initialize application
 document.addEventListener('DOMContentLoaded', function() {
     initializeTabs();
@@ -8,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
     setupFormSubmit();
     setupSearch();
     setupReportFilters();
+    setupPhotoUpload();
     renderReports();
 });
 
@@ -65,11 +69,14 @@ function setupFormSubmit() {
             technician: document.getElementById('technician').value,
             notes: document.getElementById('notes').value,
             issues: document.getElementById('issues').value,
+            photos: currentPhotos, // Add photos to installation data
             createdAt: new Date().toISOString()
         };
         
         saveInstallation(installation);
         form.reset();
+        currentPhotos = []; // Clear photos array
+        document.getElementById('photoPreviewContainer').innerHTML = ''; // Clear preview
         
         // Show success message
         alert('Installation documented successfully!');
@@ -145,6 +152,7 @@ function loadProjects(searchTerm = '') {
             <div class="detail"><strong>Date:</strong> ${formatDate(inst.installDate)}</div>
             <div class="detail"><strong>Cable:</strong> ${inst.cableType} (${inst.fiberCount} fibers)</div>
             <div class="detail"><strong>Length:</strong> ${inst.cableLength}m</div>
+            ${inst.photos && inst.photos.length > 0 ? `<div class="detail"><strong>Photos:</strong> ${inst.photos.length}</div>` : ''}
             <span class="status-badge status-${inst.testResults.toLowerCase()}">${inst.testResults}</span>
             <button onclick="event.stopPropagation(); deleteInstallation(${inst.id})" class="btn-delete">Delete</button>
         </div>
@@ -314,6 +322,23 @@ function renderReports(statusFilter = 'all') {
                     <span>${inst.issues}</span>
                 </div>
             ` : ''}
+            ${inst.photos && inst.photos.length > 0 ? `
+                <div class="report-detail-item" style="margin-top: 15px;">
+                    <label>Installation Photos (${inst.photos.length})</label>
+                    <div class="photo-gallery">
+                        ${inst.photos.map(photo => `
+                            <div class="photo-gallery-item">
+                                <img src="${photo.data}" alt="${photo.name}">
+                                <div class="photo-name">${photo.name}</div>
+                                <button class="download-btn" onclick="downloadPhoto('${photo.data}', '${photo.name}')">Download</button>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            ` : ''}
+            <div style="margin-top: 15px; text-align: center;">
+                <button onclick="sendReportByEmail(${inst.id})" class="btn btn-primary btn-email">Send via Email</button>
+            </div>
         </div>
     `).join('');
 }
@@ -359,4 +384,139 @@ function formatDate(dateString) {
         month: 'short', 
         day: 'numeric' 
     });
+}
+
+// Setup photo upload functionality
+function setupPhotoUpload() {
+    const photoUpload = document.getElementById('photoUpload');
+    
+    photoUpload.addEventListener('change', function(e) {
+        const files = Array.from(e.target.files);
+        
+        files.forEach(file => {
+            if (file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                
+                reader.onload = function(event) {
+                    const photoData = {
+                        id: Date.now() + Math.random(),
+                        name: file.name.replace(/\.[^/.]+$/, ""), // Remove extension
+                        data: event.target.result,
+                        type: file.type
+                    };
+                    
+                    currentPhotos.push(photoData);
+                    displayPhotoPreview(photoData);
+                };
+                
+                reader.readAsDataURL(file);
+            }
+        });
+        
+        // Clear input to allow same file to be selected again
+        e.target.value = '';
+    });
+}
+
+// Display photo preview with editable name
+function displayPhotoPreview(photo) {
+    const container = document.getElementById('photoPreviewContainer');
+    
+    const photoItem = document.createElement('div');
+    photoItem.className = 'photo-preview-item';
+    photoItem.setAttribute('data-photo-id', photo.id);
+    
+    photoItem.innerHTML = `
+        <img src="${photo.data}" alt="${photo.name}">
+        <input type="text" value="${photo.name}" placeholder="Photo name" 
+               onchange="updatePhotoName(${photo.id}, this.value)">
+        <button onclick="removePhoto(${photo.id})">Remove</button>
+    `;
+    
+    container.appendChild(photoItem);
+}
+
+// Update photo name
+function updatePhotoName(photoId, newName) {
+    const photo = currentPhotos.find(p => p.id === photoId);
+    if (photo) {
+        photo.name = newName;
+    }
+}
+
+// Remove photo from current selection
+function removePhoto(photoId) {
+    currentPhotos = currentPhotos.filter(p => p.id !== photoId);
+    const photoItem = document.querySelector(`[data-photo-id="${photoId}"]`);
+    if (photoItem) {
+        photoItem.remove();
+    }
+}
+
+// Download photo
+function downloadPhoto(photoData, photoName) {
+    const link = document.createElement('a');
+    link.href = photoData;
+    link.download = photoName + '.jpg';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+// Send report via email
+function sendReportByEmail(installationId) {
+    const installations = getInstallations();
+    const installation = installations.find(inst => inst.id === installationId);
+    
+    if (!installation) {
+        alert('Installation not found');
+        return;
+    }
+    
+    // Create email body with installation details
+    let emailBody = `FIBER OPTIC INSTALLATION REPORT\n\n`;
+    emailBody += `Project: ${installation.projectName}\n`;
+    emailBody += `Location: ${installation.location}\n`;
+    emailBody += `Client: ${installation.client || 'N/A'}\n`;
+    emailBody += `Installation Date: ${formatDate(installation.installDate)}\n`;
+    emailBody += `Technician: ${installation.technician || 'N/A'}\n\n`;
+    
+    emailBody += `CABLE SPECIFICATIONS:\n`;
+    emailBody += `- Type: ${installation.cableType}\n`;
+    emailBody += `- Fiber Count: ${installation.fiberCount}\n`;
+    emailBody += `- Length: ${installation.cableLength}m\n`;
+    emailBody += `- Manufacturer: ${installation.manufacturer || 'N/A'}\n\n`;
+    
+    emailBody += `SPLICE INFORMATION:\n`;
+    emailBody += `- Type: ${installation.spliceType || 'N/A'}\n`;
+    emailBody += `- Count: ${installation.spliceCount || '0'}\n`;
+    emailBody += `- Avg Loss: ${installation.avgSpliceLoss || 'N/A'} dB\n\n`;
+    
+    emailBody += `TESTING RESULTS:\n`;
+    emailBody += `- OTDR Test: ${installation.otdrTest}\n`;
+    emailBody += `- Insertion Loss: ${installation.insertionLoss || 'N/A'} dB\n`;
+    emailBody += `- Return Loss: ${installation.returnLoss || 'N/A'} dB\n`;
+    emailBody += `- Status: ${installation.testResults}\n\n`;
+    
+    if (installation.notes) {
+        emailBody += `NOTES:\n${installation.notes}\n\n`;
+    }
+    
+    if (installation.issues) {
+        emailBody += `ISSUES:\n${installation.issues}\n\n`;
+    }
+    
+    if (installation.photos && installation.photos.length > 0) {
+        emailBody += `\nATTACHMENT NOTE: This installation includes ${installation.photos.length} photo(s).\n`;
+        emailBody += `Photos can be downloaded from the web application.\n`;
+    }
+    
+    // Create mailto link
+    const subject = encodeURIComponent(`Fiber Optic Installation Report - ${installation.projectName}`);
+    const body = encodeURIComponent(emailBody);
+    
+    // Open email client
+    window.location.href = `mailto:?subject=${subject}&body=${body}`;
+    
+    alert('Email client opened. Note: Photos must be downloaded separately from the report and attached manually to the email.');
 }
